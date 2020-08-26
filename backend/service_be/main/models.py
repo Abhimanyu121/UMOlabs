@@ -38,4 +38,4 @@ class Proposal(models.Model):
     proposal_job = models.ForeignKey(Job, on_delete=models.CASCADE)
 
     def __str__(self):
-        return '{} {} {}'.format(self.id, self.title, self.employer.email)
+        return '{} {}'.format(self.id, self.title)
