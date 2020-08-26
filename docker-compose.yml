@@ -1,0 +1,28 @@
+version: "3"
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
+    command: python service_be/manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/backend
+    depends_on:
+      - db
+    tty: true
+    stdin_open: true
+volumes:
+  db-data:
