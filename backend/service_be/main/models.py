@@ -17,7 +17,7 @@ class User(AbstractUser):
 
 
 class Job(models.Model):
-    id = models.CharField(default=uuid.uuid4(), max_length=256, primary_key=True)
+    id = models.CharField(default=uuid.uuid4, max_length=256, primary_key=True)
     title = models.CharField(max_length=256, null=False, blank=False)
     description = models.TextField(null=False, blank=True)
     pay_type = models.CharField(choices=PAY_CHOICES, blank=False, null=False, max_length=128)
