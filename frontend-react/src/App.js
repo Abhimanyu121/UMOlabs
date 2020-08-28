@@ -12,6 +12,7 @@ import {
 import Navbar from "./Navbar";
 import Proposal from "./Proposal";
 import Categories from "./Categories";
+import NewPage from "./NewPage";
 function App() {
   return (
     <div className="App">
@@ -20,6 +21,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Categories} />
           <Route exact path="/proposal" component={Proposal} />
+          <Route exact path="/newpage" component={NewPage} />
         </Switch>
       </HashRouter>
     </div>

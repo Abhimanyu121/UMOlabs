@@ -1,0 +1,12 @@
+.Blue {
+  background-color: #007bff;
+  height: 25rem;
+}
+.White {
+  position: absolute;
+  top: 15rem;
+  height: 75rem;
+  width: 60%;
+  margin-left: 21%;
+  background-color: rgb(255, 247, 247);
+}
