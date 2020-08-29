@@ -24,11 +24,7 @@ import {
   Form,
   FormGroup,
 } from "shards-react";
-import Web3Connect from "web3connect";
-import Torus from "@toruslabs/torus-embed";
-import WalletConnectProvider from "@walletconnect/web3-provider";
-import Web3 from "web3";
-import {GetWeb3, SetWeb3, GetContract, Approve, GetProposal} from "./Utils/Web3Connector";
+
 import "./Navbar.css";
 import { BrowserRouter as Router, Link, HashRouter } from "react-router-dom";
 
@@ -100,38 +96,6 @@ export default class NavExample extends React.Component {
               <NavLink className="NavItem">New Project</NavLink>
             </NavItem>
             <NavItem>
-            <Web3Connect.Button
-                network="kovan" // optional
-                providerOptions={{
-                  walletconnect: {
-                    package: WalletConnectProvider, // required
-                    options: {
-                      infuraId: "311ef590f7e5472a90edfa1316248cff" // required
-                    }
-                  },
-                  torus: {
-                    package: Torus, // required
-                    options: {
-                      enableLogging: false, // optional
-                      buttonPosition: "bottom-left", // optional
-                      buildEnv: "production", // optional
-                      showTorusButton: true, // optional
-                      enabledVerifiers: { // optional
-                        google: true // optional
-                      }
-                    }
-                  },
-                }}
-                onConnect={async (provider) => {
-                 await SetWeb3(provider);
-                 console.log(GetWeb3());
-                 console.log(await GetContract())
-                 await Approve("100000")
-                }}
-                onClose={() => {
-                  console.log("Web3Connect Modal Closed"); // modal has closed
-                }}
-              />;
             </NavItem>
             <Dropdown
               open={this.state.dropdownOpen}

@@ -10,9 +10,9 @@ import {
   HashRouter,
 } from "react-router-dom";
 import Navbar from "./Navbar";
-import Proposal from "./Proposal";
 import Categories from "./Categories";
-import NewPage from "./NewPage";
+import NewJob from "./NewJob";
+import Job from "./Job";
 function App() {
   return (
     <div className="App">
@@ -20,8 +20,8 @@ function App() {
       <HashRouter>
         <Switch>
           <Route exact path="/" component={Categories} />
-          <Route exact path="/proposal" component={Proposal} />
-          <Route exact path="/newpage" component={NewPage} />
+          <Route exact path="/job/:jobid" component={Job} />
+          <Route exact path="/new-job" component={NewJob} />
         </Switch>
       </HashRouter>
     </div>

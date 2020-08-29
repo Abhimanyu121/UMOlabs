@@ -24,9 +24,9 @@ import {
   DropdownToggle,
   DropdownMenu,
 } from "shards-react";
-import "./NewPage.css";
+import "./NewJob.css";
 
-export default class NewPage extends React.Component {
+export default class NewJob extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
@@ -67,25 +67,6 @@ export default class NewPage extends React.Component {
               <FormInput className="Choose" type="file" id="file" />
             </FormGroup>
             <FormGroup>
-              <label>How Would You Like to Get it Done</label>
-              <Row>
-                <Card>
-                  <CardBody>
-                    <CardTitle>Post A Project</CardTitle>
-                    <CardSubtitle>Card subtitle</CardSubtitle>
-                    Nunc quis nisl ac justo elementum sagittis in quis justo.
-                  </CardBody>
-                </Card>
-                <Card>
-                  <CardBody>
-                    <CardTitle>Start A Contest</CardTitle>
-                    <CardSubtitle>Card subtitle</CardSubtitle>
-                    Nunc quis nisl ac justo elementum sagittis in quis justo.
-                  </CardBody>
-                </Card>
-              </Row>
-            </FormGroup>
-            <FormGroup>
               <label>How Do You Want To Pay</label>
               <Row>
                 <Card>
@@ -119,33 +100,8 @@ export default class NewPage extends React.Component {
                 </DropdownMenu>
               </Dropdown>
             </InputGroup>
-            <FormGroup>
-              <label>Do You Need A Helping Hand?</label>
-              <Row>
-                <Card>
-                  <CardBody>
-                    <CardTitle>Standard Project</CardTitle>
-                    <CardSubtitle>Card subtitle</CardSubtitle>
-                    Nunc quis nisl ac justo elementum sagittis in quis justo.
-                  </CardBody>
-                </Card>
-                <Card>
-                  <CardBody>
-                    <CardTitle>Recruiter Project</CardTitle>
-                    <CardSubtitle>Card subtitle</CardSubtitle>
-                    Nunc quis nisl ac justo elementum sagittis in quis justo.
-                  </CardBody>
-                </Card>
-              </Row>
-            </FormGroup>
+            
             <label>Are These Details Correct</label>
-            <Card>
-              <CardBody>
-                <CardTitle>Standard Project</CardTitle>
-                <CardSubtitle>Card subtitle</CardSubtitle>
-                Nunc quis nisl ac justo elementum sagittis in quis justo.
-              </CardBody>
-            </Card>
 
             <Button pill theme="warning">
               Warning

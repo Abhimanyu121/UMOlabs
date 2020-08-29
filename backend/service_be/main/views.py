@@ -91,7 +91,7 @@ class ProposalsCreate(CreateModelMixin,
 class ProposalsList(APIView):
 
     def get(self, request, *args, **kwargs):
-        job_id = kwargs['job_id']
+        job_id = kwargs['pk']
         job = Job.objects.get(pk=job_id)
         job_proposals = Proposal.objects.filter(proposal_job=job)
         job_serializer = ProposalSerializer(job_proposals, many=True)
