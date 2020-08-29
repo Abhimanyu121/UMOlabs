@@ -44,7 +44,11 @@ export default class Categories extends React.Component {
                 <CardTitle>Lorem Ipsum</CardTitle>
                 <p>Lorem ipsum dolor sit amet.</p>
                 <Button>
-                  <Link className="Link" to="/proposal">
+                  <Link
+                    style={{ color: "white" }}
+                    className="Link"
+                    to="/proposal"
+                  >
                     Read more &rarr;
                   </Link>{" "}
                 </Button>

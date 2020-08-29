@@ -17,6 +17,12 @@ import {
   InputGroupText,
   FormInput,
   Collapse,
+  Button,
+  Modal,
+  ModalBody,
+  ModalHeader,
+  Form,
+  FormGroup,
 } from "shards-react";
 import Web3Connect from "web3connect";
 import Torus from "@toruslabs/torus-embed";
@@ -24,19 +30,26 @@ import WalletConnectProvider from "@walletconnect/web3-provider";
 import Web3 from "web3";
 import {GetWeb3, SetWeb3, GetContract, Approve, GetProposal} from "./Utils/Web3Connector";
 import "./Navbar.css";
+import { BrowserRouter as Router, Link, HashRouter } from "react-router-dom";
+
 export default class NavExample extends React.Component {
   constructor(props) {
     super(props);
 
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.toggleNavbar = this.toggleNavbar.bind(this);
-
+    this.state = { open: false };
+    this.toggle = this.toggle.bind(this);
     this.state = {
       dropdownOpen: false,
       collapseOpen: false,
     };
   }
-
+  toggle() {
+    this.setState({
+      open: !this.state.open,
+    });
+  }
   toggleDropdown() {
     this.setState({
       ...this.state,
@@ -56,6 +69,8 @@ export default class NavExample extends React.Component {
   }
 
   render() {
+    const { open } = this.state;
+
     return (
       <Navbar type="dark" theme="primary" expand="md">
         <NavbarToggler onClick={this.toggleNavbar} />
@@ -72,14 +87,17 @@ export default class NavExample extends React.Component {
         <Collapse open={this.state.collapseOpen} navbar className="Nav-2">
           <Nav navbar>
             <NavItem>
-              <NavLink className="NavItem" active href="#">
-                Active
+              <NavLink
+                onClick={this.toggle}
+                className="NavItem"
+                active
+                href="#"
+              >
+                Login
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className="NavItem" href="#">
-                Disabled
-              </NavLink>
+              <NavLink className="NavItem">New Project</NavLink>
             </NavItem>
             <NavItem>
             <Web3Connect.Button
@@ -131,6 +149,28 @@ export default class NavExample extends React.Component {
             <NavbarBrand className="NavItem" href="#">
               Shards React
             </NavbarBrand>
+            <Modal open={open} toggle={this.toggle}>
+              <ModalHeader>Header</ModalHeader>
+              <ModalBody>
+                <Form>
+                  <FormGroup>
+                    <label htmlFor="#username">Username</label>
+                    <FormInput id="#username" placeholder="Username" />
+                  </FormGroup>
+                  <FormGroup>
+                    <label htmlFor="#password">Password</label>
+                    <FormInput
+                      type="password"
+                      id="#password"
+                      placeholder="Password"
+                    />
+                  </FormGroup>
+                  <Button pill theme="warning">
+                    Warning
+                  </Button>
+                </Form>
+              </ModalBody>
+            </Modal>
           </Nav>
         </Collapse>
       </Navbar>
