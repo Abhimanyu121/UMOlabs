@@ -54,7 +54,7 @@ export const createJob = async (
   skills_required,
   employer
 ) => {
-  const resp = await fetch("http://127.0.0.1:8000/api/jobs/", {
+  const resp = await fetch("http://127.0.0.1:8000/api/jobs", {
     method: "post",
     body: JSON.stringify({
       title,

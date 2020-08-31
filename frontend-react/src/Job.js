@@ -14,6 +14,12 @@ import {
   CardImg,
   ListGroup,
   ListGroupItem,
+  Modal,
+  ModalBody,
+  ModalHeader,
+  Form,
+  FormGroup,
+  FormTextarea
 } from "shards-react";
 import "./Proposal.css";
 import Patent from "./PatentImage.png";
@@ -29,9 +35,18 @@ export default class Job extends React.Component {
       job: { employer: "" },
       proposals: [],
     };
+
+    this.approveProposer = this.approveProposer.bind(this);
+    this.toggle = this.toggle.bind(this);
   }
 
-  componentDidMount() {
+  toggle() {
+    this.setState({
+      open: !this.state.open,
+    });
+  }
+
+  async componentDidMount() {
     // Fetch Job
     console.log(this.props.match.params.jobid);
     var url1 =
@@ -42,49 +57,51 @@ export default class Job extends React.Component {
       .then(async (json) => {
         const profile = await getProfile(json.employer);
         json.employer = profile;
+        console.log('json', json)
         this.setState({ job: json });
-      });
 
-    var url2 =
-      "http://127.0.0.1:8000/api/proposals/" + this.props.match.params.jobid;
+        var url2 =
+          "http://127.0.0.1:8000/api/proposals/" +
+          this.props.match.params.jobid;
 
-    fetch(url2)
-      .then((resp) => resp.json())
-      .then((json) => {
-        console.log(json);
-        json.forEach(async (j) => {
-          const profile = await getProfile(j.proposer);
-          console.log('profile', profile)
-          j.proposer = profile;
-        });
+        fetch(url2)
+          .then((resp) => resp.json())
+          .then((json) => {
+            console.log(json);
+            json.forEach(async (j) => {
+              const profile = await getProfile(j.proposer);
+              console.log("profile", profile);
+              j.proposer = profile;
+            });
 
-        console.log(json);
+            console.log(json);
 
-        this.setState({ proposals: json });
+            this.setState({ proposals: json });
+          });
       });
   }
 
   async approveProposer(proposerId, proposerAddress) {
-    console.log(this.state.job.id, proposerAddress)
+    console.log(this.state.job.id, proposerAddress);
 
-    let currentJob = this.state.job
-    currentJob.employer = this.state.job.employer.id
-    currentJob.approved = 'True'
-    currentJob.awarded_to = proposerId
+    let currentJob = this.state.job;
+    currentJob.employer = this.state.job.employer.id;
+    currentJob.approved = "True";
+    currentJob.awarded_to = proposerId;
 
-    console.log('currentJob', currentJob)
+    console.log("currentJob", currentJob);
 
-    fetch('http://127.0.0.1:8000/api/jobs/' + this.state.job.id, {
-      method: 'put',
+    fetch("http://127.0.0.1:8000/api/jobs/" + this.state.job.id, {
+      method: "put",
       body: JSON.stringify(currentJob),
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     })
-    .then((resp) => resp.json())
-    .then((json) => {
-      console.log('json', json)
-    })
+      .then((resp) => resp.json())
+      .then((json) => {
+        console.log("json", json);
+      });
     // await AddProposal(this.state.job.id, proposerAddress)
   }
 
@@ -103,7 +120,7 @@ export default class Job extends React.Component {
               <CardBody>
                 <CardTitle>Lorem Ipsum</CardTitle>
                 <p>Lorem ipsum dolor sit amet.</p>
-                <Button>Read more &rarr;</Button>
+                <Button onClick={this.toggle}>Read more &rarr;</Button>
               </CardBody>
               <CardFooter>Card footer</CardFooter>
             </Card>
@@ -165,12 +182,36 @@ export default class Job extends React.Component {
                 <div className="PatentComment">
                   <p>{proposal.description}</p>
                 </div>
-                <Button onClick={() => this.approveProposer(proposal.id, this.state.job.budget)}>
+                <Button
+                  onClick={() =>
+                    this.approveProposer(proposal.id, this.state.job.budget)
+                  }
+                >
                   Approve Proposal
                 </Button>
               </div>
             ))
           : null}
+        <Modal size="lg" open={this.state.open} toggle={this.toggle}>
+          <ModalHeader>
+            Please Enter the Following Details about your Proposal
+          </ModalHeader>
+          <Form>
+            <FormGroup>
+              <label>Title</label>
+              <FormInput placeholder="Input" />
+            </FormGroup>
+            <FormGroup>
+            <label>Description</label>
+              <div>
+                <FormTextarea onChange={(e) => {this.setState({description: e.target.value})}} />
+              </div>
+            </FormGroup>
+            <Button pill theme="warning">
+              Warning
+            </Button>
+          </Form>
+        </Modal>
       </div>
     );
   }

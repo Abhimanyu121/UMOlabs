@@ -95,8 +95,6 @@ export default class NavExample extends React.Component {
             <NavItem>
               <NavLink className="NavItem">New Project</NavLink>
             </NavItem>
-            <NavItem>
-            </NavItem>
             <Dropdown
               open={this.state.dropdownOpen}
               toggle={this.toggleDropdown}

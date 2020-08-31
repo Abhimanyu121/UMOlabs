@@ -25,24 +25,42 @@ import {
   DropdownMenu,
 } from "shards-react";
 import "./NewJob.css";
+import { createJob } from "./services";
 
 export default class NewJob extends React.Component {
   constructor(props) {
     super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.state = { value: null };
-    this.toggle = this.toggle.bind(this);
+    
     this.state = {
       open: false,
+      title: '',
+      description: '',
+      budget: '',
+      skills_required: '',
+      employer: {
+        id: '961908c1-0ea4-4413-9345-86d1e434e09c'
+      }
     };
+
+    this.toggle = this.toggle.bind(this)
+    this.createNewJob = this.createNewJob.bind(this)
   }
+
   toggle() {
     this.setState({ open: !this.state.open });
   }
 
-  handleChange(e) {
-    this.setState({ value: e.target.value });
+  async createNewJob() {
+    try {
+      const resp = await createJob(this.state.title, this.state.description, this.state.budget, this.state.skills_required, this.state.employer.id)
+      if (resp) {
+        console.log('resp', resp)
+      }
+    } catch (error) {
+      console.log(error, 'error')
+    }
   }
+
   render() {
     const { value } = this.state;
     return (
@@ -52,12 +70,12 @@ export default class NewJob extends React.Component {
           <Form>
             <FormGroup>
               <label htmlFor="#name">Choose A Name For Your Project</label>
-              <FormInput id="#name" placeholder="Name" />
+              <FormInput id="#name" placeholder="Name" onChange={(e) => {this.setState({title: e.target.value})}}/>
             </FormGroup>
             <FormGroup>
               <label htmlFor="#password">Tell Us More About Your Project</label>
               <div>
-                <FormTextarea onChange={this.handleChange} />
+                <FormTextarea onChange={(e) => {this.setState({description: e.target.value})}} />
               </div>
             </FormGroup>
             <FormGroup>
@@ -65,6 +83,12 @@ export default class NewJob extends React.Component {
                 Upload File
               </label>
               <FormInput className="Choose" type="file" id="file" />
+            </FormGroup>
+            <FormGroup>
+              <label htmlFor="#password">Skills Required</label>
+              <div>
+                <FormTextarea onChange={(e) => {this.setState({skills_required: e.target.value.split(',')})}} />
+              </div>
             </FormGroup>
             <FormGroup>
               <label>How Do You Want To Pay</label>
@@ -86,25 +110,25 @@ export default class NewJob extends React.Component {
               </Row>
             </FormGroup>
             <InputGroup>
-              <FormInput />
+              <FormInput onChange={(e) => {this.setState({budget: e.target.value})}} />
               <Dropdown
                 addonType="prepend"
                 open={this.state.open}
                 toggle={this.toggle}
               >
-                <DropdownToggle caret>INR</DropdownToggle>
+                <DropdownToggle caret>DAI</DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem>Action</DropdownItem>
-                  <DropdownItem>Another action</DropdownItem>
-                  <DropdownItem>Something else here</DropdownItem>
+                  <DropdownItem>ETH</DropdownItem>
+                  <DropdownItem>USDT</DropdownItem>
+                  <DropdownItem>USDC</DropdownItem>
                 </DropdownMenu>
               </Dropdown>
             </InputGroup>
             
             <label>Are These Details Correct</label>
 
-            <Button pill theme="warning">
-              Warning
+            <Button onClick={this.createNewJob} pill theme="warning">
+              Submit Project
             </Button>
           </Form>
         </div>

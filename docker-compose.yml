@@ -24,5 +24,18 @@ services:
       - db
     tty: true
     stdin_open: true
+
+  web:
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile
+    command: npm start
+    ports: 
+      - "3000:3000"
+    depends_on: 
+      - api
+    volumes: 
+      - ./frontend-react/src:/frontend/src
+    stdin_open: true
 volumes:
   db-data:
