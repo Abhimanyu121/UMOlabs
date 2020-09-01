@@ -5,19 +5,26 @@ import {
   CardTitle,
   CardImg,
   CardBody,
-  CardFooter,
   Button,
+  CardFooter,
   Container,
   Row,
   Col,
   Modal,
   ModalBody,
   ModalHeader,
+  FormRadio,
 } from "shards-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLaptop } from "@fortawesome/free-solid-svg-icons";
 import { BrowserRouter as Router, Link, HashRouter } from "react-router-dom";
 
+import logo from "./logo.png";
 import "./Categories.css";
 import { shortDescription } from "./utils";
+
+import { useHistory } from "react-router-dom";
+
 export default class Categories extends React.Component {
   constructor(props) {
     super(props);
@@ -48,44 +55,168 @@ export default class Categories extends React.Component {
 
     return (
       <div>
-        <Container>
+        <div className="Blue">
           <Row>
-            {this.state.jobs.length
-              ? this.state.jobs.map((job, key) => (
-                  <div key={key}>
-                    <Card
-                      className="CategoryCard"
-                      style={{ maxWidth: "300px" }}
+            {" "}
+            <h1 className="HireHead">
+              Hire the best freelancers for any job, online.
+            </h1>
+          </Row>
+          <Row>
+            <Button className="Btn-1" outline theme="light">
+              Dark
+            </Button>
+            <Button className="Btn-2" outline theme="light">
+              Dark
+            </Button>
+          </Row>
+        </div>
+
+        <Row>
+          <Col>
+            <div className="FilterDiv">
+              {" "}
+              <Row>
+                <p className="mb-2 FilterHead">Filter The Jobs By :</p>
+              </Row>
+              <Row className="Filter">
+                {" "}
+                <FormRadio style={{ color: "black" }}>Orange</FormRadio>{" "}
+              </Row>
+              <Row className="Filter">
+                <FormRadio>Lemon</FormRadio>
+              </Row>
+              <Row className="Filter">
+                <FormRadio className="Filter">Kiwi</FormRadio>
+              </Row>
+              <Row className="Filter">
+                {" "}
+                <FormRadio style={{ color: "black" }}>Orange</FormRadio>{" "}
+              </Row>
+              <Row className="Filter">
+                <FormRadio>Lemon</FormRadio>
+              </Row>
+              <Row className="Filter">
+                <FormRadio className="Filter">Kiwi</FormRadio>
+              </Row>
+              <Row>
+                <p className="mb-2 FilterHead">Sort By:</p>
+              </Row>
+              <Row className="Filter">
+                {" "}
+                <FormRadio style={{ color: "black" }}>Orange</FormRadio>{" "}
+              </Row>
+              <Row className="Filter">
+                <FormRadio>Lemon</FormRadio>
+              </Row>
+              <Row className="Filter">
+                <FormRadio className="Filter">Kiwi</FormRadio>
+              </Row>
+              <Row className="Filter">
+                {" "}
+                <FormRadio style={{ color: "black" }}>Orange</FormRadio>{" "}
+              </Row>
+              <Row className="Filter">
+                <FormRadio>Lemon</FormRadio>
+              </Row>
+              <Row className="Filter">
+                <FormRadio className="Filter">Kiwi</FormRadio>
+              </Row>
+            </div>
+          </Col>
+          <Col>
+            <div>
+              {this.state.jobs.length
+                ? this.state.jobs.map((job, key) => (
+                    <div
+                      key={key}
+                      className="Jobs"
+                      onClick={() => {
+                        this.props.history.push(`/job/${job.id}`);
+                      }}
                     >
-                      <CardImg src="https://place-hold.it/300x200" />
-                      <CardBody>
-                        <CardTitle>{job.title}</CardTitle>
-                        <p>{shortDescription(job.description)}</p>
-                        <p>
+                      <Row>
+                        <Col>
+                          <h4 className="JobHeading">
+                            <FontAwesomeIcon
+                              icon={faLaptop}
+                              style={{ marginRight: 7 }}
+                            />
+                            {job.title}
+                          </h4>
+                        </Col>
+
+                        <Col>
+                          <h4 className="JobHeading1">$25-$30/Hour</h4>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <p className="JobPara">
+                          {shortDescription(job.description)}
+                        </p>
+                      </Row>
+                      <Row>
+                        <p className="JobPara">
                           <b>Skills Required: </b>
                           {job.skills_required.join(", ")}
                         </p>
-                      </CardBody>
-                      <CardFooter>
-                        <Link
-                          style={{ color: "white" }}
-                          className="Link"
-                          to={`/job/${job.id}`}
-                        >
-                          Read more &rarr;
-                        </Link>
-                      </CardFooter>
-                    </Card>
-                  </div>
-                ))
-              : null}
-          </Row>
-        </Container>
-        <Modal size="lg" open={open} toggle={this.toggle}>
-          <ModalHeader>Header</ModalHeader>
-          <ModalBody>Hello there!</ModalBody>
-        </Modal>
+                      </Row>
+                      <Row className="SellerNameIcon">
+                        <img
+                          width="3%"
+                          height="2%"
+                          className="Avatar"
+                          src={logo}
+                        />
+                        <h6 className="SellName">Alison Grey</h6>
+                      </Row>
+
+                      {/* <Link
+                        style={{ color: "white" }}
+                        className="Link"
+                        to={`/job/${job.id}`}
+                      >
+                        Read more &rarr;
+                      </Link> */}
+                    </div>
+                  ))
+                : null}
+            </div>
+          </Col>
+
+          <Col></Col>
+          <Col></Col>
+        </Row>
       </div>
+      // {/* {this.state.jobs.length
+      //     ? this.state.jobs.map((job, key) => (
+      //         <div key={key}>
+      //           <Card
+      //             className="CategoryCard"
+      //             style={{ maxWidth: "300px" }}
+      //           >
+      //             <CardImg src="https://place-hold.it/300x200" />
+      //             <CardBody>
+      //               <CardTitle>{job.title}</CardTitle>
+      //               <p>{shortDescription(job.description)}</p>
+      //               <p>
+      //                 <b>Skills Required: </b>
+      //                 {job.skills_required.join(", ")}
+      //               </p>
+      //             </CardBody>
+      //             <CardFooter>
+      //               <Link
+      //                 style={{ color: "white" }}
+      //                 className="Link"
+      //                 to={`/job/${job.id}`}
+      //               >
+      //                 Read more &rarr;
+      //               </Link>
+      //             </CardFooter>
+      //           </Card>
+      //         </div>
+      //       ))
+      //     : null} */}
     );
   }
 }

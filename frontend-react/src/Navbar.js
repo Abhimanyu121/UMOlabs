@@ -68,22 +68,26 @@ export default class NavExample extends React.Component {
     const { open } = this.state;
 
     return (
-      <Navbar type="dark" theme="primary" expand="md">
+      <Navbar type="dark" className="NavBar" expand="md">
         <NavbarToggler onClick={this.toggleNavbar} />
         <Nav navbar className="ml-auto">
           <InputGroup size="sm" className="Search" seamless>
             <InputGroupAddon type="prepend">
               <InputGroupText>
-                <FontAwesomeIcon icon={faSearch} />
+                <FontAwesomeIcon style={{ color: "black" }} icon={faSearch} />
               </InputGroupText>
             </InputGroupAddon>
-            <FormInput className="border-0" placeholder="Search..." />
+            <FormInput
+              className="border-0 SearchPlace"
+              placeholder="Search..."
+            />
           </InputGroup>
         </Nav>
         <Collapse open={this.state.collapseOpen} navbar className="Nav-2">
           <Nav navbar>
             <NavItem>
               <NavLink
+                style={{ color: "black", paddingRight: 10 }}
                 onClick={this.toggle}
                 className="NavItem"
                 active
@@ -93,13 +97,23 @@ export default class NavExample extends React.Component {
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className="NavItem">New Project</NavLink>
+              <NavLink
+                style={{ color: "black", paddingRight: 30 }}
+                className="NavItem"
+              >
+                New Job
+              </NavLink>
             </NavItem>
-            <Dropdown
+            {/* <Dropdown
               open={this.state.dropdownOpen}
               toggle={this.toggleDropdown}
             >
-              <DropdownToggle nav caret className="NavItem">
+              <DropdownToggle
+                style={{ color: "black" }}
+                nav
+                caret
+                className="NavItem"
+              >
                 Dropdown
               </DropdownToggle>
               <DropdownMenu>
@@ -107,10 +121,17 @@ export default class NavExample extends React.Component {
                 <DropdownItem>Another action</DropdownItem>
                 <DropdownItem>Something else here</DropdownItem>
               </DropdownMenu>
-            </Dropdown>
-            <NavbarBrand className="NavItem" href="#">
+            </Dropdown> */}
+            <NavbarBrand
+              style={{ color: "black" }}
+              className="NavItem"
+              href="#"
+            >
               Shards React
             </NavbarBrand>
+            <Button pill theme="warning">
+              Warning
+            </Button>
             <Modal open={open} toggle={this.toggle}>
               <ModalHeader>Header</ModalHeader>
               <ModalBody>

@@ -23,6 +23,7 @@ import {
   DropdownItem,
   DropdownToggle,
   DropdownMenu,
+  FormCheckbox,
 } from "shards-react";
 import "./NewJob.css";
 import { createJob } from "./services";
@@ -30,20 +31,20 @@ import { createJob } from "./services";
 export default class NewJob extends React.Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       open: false,
-      title: '',
-      description: '',
-      budget: '',
-      skills_required: '',
+      title: "",
+      description: "",
+      budget: "",
+      skills_required: "",
       employer: {
-        id: '961908c1-0ea4-4413-9345-86d1e434e09c'
-      }
+        id: "961908c1-0ea4-4413-9345-86d1e434e09c",
+      },
     };
 
-    this.toggle = this.toggle.bind(this)
-    this.createNewJob = this.createNewJob.bind(this)
+    this.toggle = this.toggle.bind(this);
+    this.createNewJob = this.createNewJob.bind(this);
   }
 
   toggle() {
@@ -52,12 +53,18 @@ export default class NewJob extends React.Component {
 
   async createNewJob() {
     try {
-      const resp = await createJob(this.state.title, this.state.description, this.state.budget, this.state.skills_required, this.state.employer.id)
+      const resp = await createJob(
+        this.state.title,
+        this.state.description,
+        this.state.budget,
+        this.state.skills_required,
+        this.state.employer.id
+      );
       if (resp) {
-        console.log('resp', resp)
+        console.log("resp", resp);
       }
     } catch (error) {
-      console.log(error, 'error')
+      console.log(error, "error");
     }
   }
 
@@ -69,50 +76,91 @@ export default class NewJob extends React.Component {
         <div className="White">
           <Form>
             <FormGroup>
-              <label htmlFor="#name">Choose A Name For Your Project</label>
-              <FormInput id="#name" placeholder="Name" onChange={(e) => {this.setState({title: e.target.value})}}/>
-            </FormGroup>
-            <FormGroup>
-              <label htmlFor="#password">Tell Us More About Your Project</label>
-              <div>
-                <FormTextarea onChange={(e) => {this.setState({description: e.target.value})}} />
-              </div>
-            </FormGroup>
-            <FormGroup>
-              <label className="Lable" htmlFor="#choose">
-                Upload File
-              </label>
-              <FormInput className="Choose" type="file" id="file" />
-            </FormGroup>
-            <FormGroup>
-              <label htmlFor="#password">Skills Required</label>
-              <div>
-                <FormTextarea onChange={(e) => {this.setState({skills_required: e.target.value.split(',')})}} />
-              </div>
-            </FormGroup>
-            <FormGroup>
-              <label>How Do You Want To Pay</label>
               <Row>
-                <Card>
+                <label className="Label" htmlFor="#name">
+                  Choose A Name For Your Project
+                </label>
+              </Row>
+              <FormInput
+                id="#name"
+                placeholder="Name"
+                className="Input"
+                onChange={(e) => {
+                  this.setState({ title: e.target.value });
+                }}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Row>
+                <label className="Label">
+                  {" "}
+                  Tell Us More About Your Project
+                </label>
+              </Row>
+              <div>
+                <FormTextarea
+                  className="Input"
+                  onChange={(e) => {
+                    this.setState({ description: e.target.value });
+                  }}
+                />
+              </div>
+            </FormGroup>
+            <FormGroup>
+              <Row>
+                <label className="Label" htmlFor="#choose">
+                  Upload File
+                </label>
+              </Row>
+              <FormInput className="Input" type="file" id="file" />
+            </FormGroup>
+            <FormGroup>
+              <Row>
+                <label className="Label" htmlFor="#password">
+                  Skills Required
+                </label>
+              </Row>
+              <div>
+                <FormTextarea
+                  className="Input"
+                  onChange={(e) => {
+                    this.setState({
+                      skills_required: e.target.value.split(","),
+                    });
+                  }}
+                />
+              </div>
+            </FormGroup>
+            <FormGroup>
+              <Row>
+                <label className="Label">How Do You Want To Pay</label>
+              </Row>
+              <Row>
+                <Card className="CardForm">
                   <CardBody>
                     <CardTitle>Pay Fixed Price</CardTitle>
-                    <CardSubtitle>Card subtitle</CardSubtitle>
                     Nunc quis nisl ac justo elementum sagittis in quis justo.
                   </CardBody>
                 </Card>
-                <Card>
+                <Card className="CardForm1">
                   <CardBody>
                     <CardTitle>Pay By The Hour</CardTitle>
-                    <CardSubtitle>Card subtitle</CardSubtitle>
                     Nunc quis nisl ac justo elementum sagittis in quis justo.
                   </CardBody>
                 </Card>
               </Row>
             </FormGroup>
             <InputGroup>
-              <FormInput onChange={(e) => {this.setState({budget: e.target.value})}} />
+              <FormInput
+                className="Input1"
+                onChange={(e) => {
+                  this.setState({ budget: e.target.value });
+                }}
+              />
               <Dropdown
+                className="DD"
                 addonType="prepend"
+                theme="warning"
                 open={this.state.open}
                 toggle={this.toggle}
               >
@@ -124,10 +172,13 @@ export default class NewJob extends React.Component {
                 </DropdownMenu>
               </Dropdown>
             </InputGroup>
-            
-            <label>Are These Details Correct</label>
 
-            <Button onClick={this.createNewJob} pill theme="warning">
+            <Button
+              className="Submit"
+              onClick={this.createNewJob}
+              pill
+              theme="primary"
+            >
               Submit Project
             </Button>
           </Form>

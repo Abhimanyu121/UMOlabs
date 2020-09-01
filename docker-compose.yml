@@ -28,13 +28,13 @@ services:
   web:
     build:
       context: .
-      dockerfile: ./frontend/Dockerfile
+      dockerfile: ./frontend-react/Dockerfile
     command: npm start
-    ports: 
+    ports:
       - "3000:3000"
-    depends_on: 
+    depends_on:
       - api
-    volumes: 
+    volumes:
       - ./frontend-react/src:/frontend/src
     stdin_open: true
 volumes:

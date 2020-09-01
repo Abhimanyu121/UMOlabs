@@ -2,3 +2,73 @@
   margin-top: 5%;
   margin-left: 5%;
 }
+.Blue {
+  background-color: #0abcf9;
+  background-image: linear-gradient(315deg, #0abcf9 0%, #2c69d1 74%);
+  height: 25rem;
+}
+.HireHead {
+  margin-top: 7%;
+  margin-left: 5%;
+  color: white;
+  width: 40%;
+}
+.Btn-1 {
+  margin-left: 17%;
+  margin-top: 2%;
+  color: white;
+}
+.Btn-2 {
+  margin-left: 2%;
+  margin-top: 2%;
+  color: white;
+}
+.FilterDiv {
+  width: 90%;
+
+  background-color: #fbfcfd;
+}
+.FilterHead {
+  margin-left: 26%;
+  color: black;
+  font-weight: bold;
+  margin-top: 3%;
+}
+.Filter {
+  margin-left: 28%;
+  color: black;
+}
+.Jobs {
+  width: 290%;
+
+  margin-top: 10%;
+  background-color: #f5f7fc;
+}
+.JobHeading {
+  color: Black;
+  margin-left: 4%;
+  margin-top: 3%;
+}
+.JobHeading1 {
+  color: Black;
+  margin-left: 40%;
+  margin-top: 3%;
+}
+.JobPara {
+  color: Black;
+  margin-left: 8%;
+}
+.SellName {
+  margin-top: 0.5%;
+  margin-left: 0.5%;
+}
+.SellerNameIcon {
+  margin-left: 3%;
+  margin-bottom: 3%;
+}
+/* .FilterDiv.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 10%;
+  background-color: #;
+} */

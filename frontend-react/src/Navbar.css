@@ -1,11 +1,25 @@
 .Nav-2 {
-  margin-left: 35%;
+  margin-left: 45%;
 }
 .Search {
   width: 500px;
   margin-left: 20%;
+  border-radius: 15%;
+  background-color: rgb(183, 176, 218);
+}
+::placeholder {
+  color: black;
 }
 .NavItem {
-  margin-left: 20%;
-  margin-right: 24%;
+  padding-right: 10px;
+  color: black;
+}
+.NavBar {
+  background-color: #fbfcfd;
+  color: black;
+  height: 10%;
+  position: sticky;
+}
+.SearchPlace {
+  color: black;
 }

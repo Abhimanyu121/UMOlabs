@@ -1,13 +1,12 @@
 .Avatar {
   border-radius: 50%;
-  margin-left: 5%;
+  margin-left: 14%;
 }
 .Seller {
   height: 40%;
   width: 80%;
-  border: solid 1px black;
   margin-top: 2%;
-  margin-left: 10%;
+  margin-left: 17%;
 }
 .Logo {
   height: 3rem;
@@ -16,11 +15,10 @@
   margin-left: 5%;
 }
 .PatentComment {
-  background-color: rgb(218, 245, 248);
   width: 80%;
   height: 8%;
-  margin-left: 11%;
-  border: solid 1px powderblue;
+  margin-left: 15%;
+
   margin-bottom: 3%;
 }
 .ComHead {
@@ -28,22 +26,51 @@
   margin-left: 1%;
 }
 .ComHead1 {
-  margin-top: 2%;
+  margin-top: 4%;
   margin-left: 1%;
 }
 .Heading {
-  margin-left: 3%;
+  margin-left: 14%;
+  margin-top: 5%;
+}
+.Heading1 {
+  margin-left: 14%;
   margin-top: 2%;
 }
 .ContactButton {
   margin-left: 11%;
 }
 .Description {
-  width: 90%;
-  margin-left: 2%;
+  margin-left: 18%;
 }
 .SubPat {
   margin-left: 6%;
   margin-top: 14%;
   height: 78%;
+  width: 70%;
+  margin-left: 20%;
+  top: 20%;
+  position: -webkit-sticky;
+  position: sticky;
+}
+.JobProfile {
+  position: relative;
+}
+.Respond {
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.473);
+}
+.SellerInfo {
+  margin-top: 4%;
+  justify-content: left;
+}
+.EthDesc {
+  margin-left: 19%;
+}
+.NameJob {
+  margin-top: 3%;
+}
+.ApproveProposal {
+  margin-left: 60%;
+  margin-bottom: 6%;
 }

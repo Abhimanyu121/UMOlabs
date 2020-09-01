@@ -19,13 +19,17 @@ import {
   ModalHeader,
   Form,
   FormGroup,
-  FormTextarea
+  FormTextarea,
 } from "shards-react";
 import "./Proposal.css";
 import Patent from "./PatentImage.png";
 import logo from "./logo.png";
 import { getProfile } from "./services";
-import { AddProposal } from "./Utils/Web3Connector";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+
+import { AddProposal } from "./utils/Web3Connector";
 
 export default class Job extends React.Component {
   constructor(props) {
@@ -57,7 +61,7 @@ export default class Job extends React.Component {
       .then(async (json) => {
         const profile = await getProfile(json.employer);
         json.employer = profile;
-        console.log('json', json)
+        console.log("json", json);
         this.setState({ job: json });
 
         var url2 =
@@ -110,11 +114,134 @@ export default class Job extends React.Component {
       <div>
         <Row>
           <Col>
-            <h3 className="Heading">{this.state.job.title}</h3>
-            <img src={Patent} />
+            <div className="JobProfile">
+              <h3 className="Heading">{this.state.job.title}</h3>
+              <Row>
+                <h5 className="Heading">Description</h5>
+              </Row>
+              <Row>
+                {" "}
+                <p className="Description">{this.state.job.description}</p>
+              </Row>
+              <Row>
+                <h5 className="Heading1">About the seller</h5>
+              </Row>
+              <Row>
+                <img width="8%" height="8%" className="Avatar" src={logo} />
+                <h6 className="ComHead1">
+                  {this.state.job.employer.first_name +
+                    " " +
+                    this.state.job.employer.last_name}
+                </h6>
+                {/* <Button className="ContactButton" outline theme="dark">
+                  Contact Me
+                </Button>{" "} */}
+              </Row>
+
+              <div className="Seller">
+                <Row>
+                  {" "}
+                  <Col> From</Col>
+                  <Col>Last Delivery</Col>
+                  <Col>Avg. response time</Col>
+                </Row>
+
+                <Row>
+                  {" "}
+                  <Col className="Respond"> Germany</Col>
+                  <Col className="Respond">2 Days Ago</Col>
+                  <Col className="Respond">1 Hour</Col>
+                </Row>
+                <p className="SellerInfo">
+                  Lorem Ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem Ipsum has been the industry's
+                  standard dummy text ever since the 1500s, when an unknown
+                  printer took a galley of type and scrambled it to make a type
+                  specimen book. It has survived not only five centuries, but
+                  also the leap into electronic typesetting, remaining
+                  essentially unchanged. It was popularised in the 1960s with
+                  the release of Letraset sheets containing Lorem Ipsum
+                  passages, and more recently with desktop publishing software
+                  like Aldus PageMaker including versions of Lorem Ipsum.
+                </p>
+                {/* <p>
+                  <div>
+                    <Row>
+                      {" "}
+                      <Col> From</Col>
+                      <Col>Last Delivery</Col>
+                    </Row>
+                  </div>
+                  <div>
+                    <Row>
+                      {" "}
+                      <Col> Germany</Col>
+                      <Col>2 Days Ago</Col>
+                    </Row>
+                  </div>
+                  Lorem Ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem Ipsum has been the industry's
+                  standard dummy text ever since the 1500s, when an unknown
+                  printer took a galley of type and scrambled it to make a type
+                  specimen book. It has survived not only five centuries, but
+                  also the leap into electronic typesetting, remaining
+                  essentially unchanged. It was popularised in the 1960s with
+                  the release of Letraset sheets containing Lorem Ipsum
+                  passages, and more recently with desktop publishing software
+                  like Aldus PageMaker including versions of Lorem Ipsum.
+                </p> */}
+              </div>
+
+              <Row>
+                <h5 className="Heading1">Proposals</h5>
+              </Row>
+
+              {this.state.proposals
+                ? this.state.proposals.map((proposal, key) => (
+                    <div key={key}>
+                      <Row className="NameJob">
+                        <img
+                          width="4%"
+                          height="5%"
+                          className="Avatar"
+                          src={logo}
+                        />
+                        <h5 className="ComHead">
+                          {proposal.proposer.first_name +
+                            " " +
+                            proposal.proposer.last_name}
+                        </h5>
+                      </Row>
+                      <Row>
+                        <h6 className="EthDesc">
+                          Eth Address: {proposal.proposer.eth_address}
+                        </h6>
+                      </Row>
+                      <div className="PatentComment">
+                        <p>{proposal.description}</p>
+                      </div>
+                      <Button
+                        className="ApproveProposal"
+                        onClick={() =>
+                          this.approveProposer(
+                            proposal.id,
+                            this.state.job.budget
+                          )
+                        }
+                      >
+                        <FontAwesomeIcon
+                          icon={faThumbsUp}
+                          style={{ marginRight: 7 }}
+                        />{" "}
+                        Approve Proposal
+                      </Button>
+                    </div>
+                  ))
+                : null}
+            </div>
           </Col>
           <Col>
-            <Card className="SubPat" style={{ maxWidth: "600px" }}>
+            <div className="SubPat">
               <CardHeader>Card header</CardHeader>
 
               <CardBody>
@@ -123,75 +250,10 @@ export default class Job extends React.Component {
                 <Button onClick={this.toggle}>Read more &rarr;</Button>
               </CardBody>
               <CardFooter>Card footer</CardFooter>
-            </Card>
+            </div>
           </Col>
         </Row>
-        <Row>
-          <h3 className="Heading">Description</h3>
-          <p className="Description">{this.state.job.description}</p>
-        </Row>
-        <Row>
-          <h3 className="Heading">About the seller</h3>
-        </Row>
-        <Row>
-          <img width="5%" className="Avatar" src={logo} />
-          <h4 className="ComHead1">
-            {this.state.job.employer.first_name +
-              " " +
-              this.state.job.employer.last_name}
-          </h4>
-        </Row>
-        <Row>
-          <Button className="ContactButton" outline theme="dark">
-            Contact Me
-          </Button>
-        </Row>
-        <div className="Seller">
-          <p>
-            <CardHeader>Information</CardHeader>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus
-            PageMaker including versions of Lorem Ipsum.
-          </p>
-        </div>
 
-        <Row>
-          <h3 className="Heading">Proposals</h3>
-        </Row>
-
-        {this.state.proposals
-          ? this.state.proposals.map((proposal, key) => (
-              <div key={key}>
-                <Row>
-                  <img width="3%" className="Logo" src={logo} />
-                  <h5 className="ComHead">
-                    {proposal.proposer.first_name +
-                      " " +
-                      proposal.proposer.last_name}
-                  </h5>
-                </Row>
-                <Row>
-                  <p>Eth Address: {proposal.proposer.eth_address} </p>
-                </Row>
-                <div className="PatentComment">
-                  <p>{proposal.description}</p>
-                </div>
-                <Button
-                  onClick={() =>
-                    this.approveProposer(proposal.id, this.state.job.budget)
-                  }
-                >
-                  Approve Proposal
-                </Button>
-              </div>
-            ))
-          : null}
         <Modal size="lg" open={this.state.open} toggle={this.toggle}>
           <ModalHeader>
             Please Enter the Following Details about your Proposal
@@ -202,9 +264,13 @@ export default class Job extends React.Component {
               <FormInput placeholder="Input" />
             </FormGroup>
             <FormGroup>
-            <label>Description</label>
+              <label>Description</label>
               <div>
-                <FormTextarea onChange={(e) => {this.setState({description: e.target.value})}} />
+                <FormTextarea
+                  onChange={(e) => {
+                    this.setState({ description: e.target.value });
+                  }}
+                />
               </div>
             </FormGroup>
             <Button pill theme="warning">
