@@ -3,6 +3,7 @@ import uuid
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.postgres.fields import ArrayField
+from django.utils.timezone import now
 
 # PAY_CHOICES = (('fix', 'fix'), ('hourly', 'hourly'))
 
@@ -16,6 +17,7 @@ class User(AbstractUser):
     def __str__(self):
         return self.email
 
+
 class Job(models.Model):
     id = models.CharField(default=uuid.uuid4, max_length=256, primary_key=True)
     title = models.CharField(max_length=256, null=False, blank=False)
@@ -28,6 +30,10 @@ class Job(models.Model):
 
     approved = models.BooleanField(default=False)
     awarded_to = models.ForeignKey('main.Proposal', on_delete=models.CASCADE, related_name='awarded_to_proposal', null=True, blank=True)
+    submitted_on = models.DateTimeField(default=now, blank=True)
+
+    payout_released = models.BooleanField(default=False)
+    job_disputed = models.BooleanField(default=False)
 
     def __str__(self):
         return '{} {} {}'.format(self.id, self.title, self.employer.email)
@@ -39,6 +45,7 @@ class Proposal(models.Model):
     description = models.TextField(null=False, blank=True)
     proposer = models.ForeignKey(User, on_delete=models.CASCADE)
     proposal_job = models.ForeignKey(Job, on_delete=models.CASCADE)
+    submitted_on = models.DateTimeField(default=now, blank=True)
 
     def __str__(self):
         return '{} {}'.format(self.id, self.title)
