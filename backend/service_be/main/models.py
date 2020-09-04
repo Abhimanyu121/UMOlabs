@@ -32,7 +32,7 @@ class Job(models.Model):
     awarded_to = models.ForeignKey('main.Proposal', on_delete=models.CASCADE, related_name='awarded_to_proposal', null=True, blank=True)
     submitted_on = models.DateTimeField(default=now, blank=True)
 
-        payout_released = models.BooleanField(default=False)
+    payout_released = models.BooleanField(default=False)
     job_disputed = models.BooleanField(default=False)
 
     def __str__(self):
