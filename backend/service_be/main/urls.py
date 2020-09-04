@@ -1,6 +1,6 @@
 from django.urls import path
 
-from main.views import RootView, UserList, UserDetail, JobsList, JobsDetail, ProposalsList, ProposalsDetail, ProposalsCreate
+from main.views import RootView, UserList, UserDetail, JobsList, JobsDetail, ProposalsList, ProposalsDetail, ProposalsCreate, Login
 
 urlpatterns = [
     path('', RootView.as_view(), name='root-view'),
@@ -11,4 +11,5 @@ urlpatterns = [
     path('proposals/<str:pk>', ProposalsList.as_view(), name='proposals-list'),
     path('proposals', ProposalsCreate.as_view(), name='proposals-create'),
     path('proposals/<str:pk>', ProposalsDetail.as_view(), name='proposals-detail'),
+    path('login', Login.as_view(), name='login'),
 ]

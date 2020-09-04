@@ -27,20 +27,77 @@ import {
 
 import "./Navbar.css";
 import { BrowserRouter as Router, Link, HashRouter } from "react-router-dom";
+import { login } from "./services";
+import { defaultAddress, SetWeb3 } from "./utils/Web3Connector";
 
 export default class NavExample extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      dropdownOpen: false,
+      collapseOpen: false,
+      email: "",
+      password: "",
+      userAddress: "",
+      loggedIn: false,
+    };
+
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.toggleNavbar = this.toggleNavbar.bind(this);
     this.state = { open: false };
     this.toggle = this.toggle.bind(this);
-    this.state = {
-      dropdownOpen: false,
-      collapseOpen: false,
-    };
+    this.loginUser = this.loginUser.bind(this);
+    this.logout = this.logout.bind(this);
+    this.getWeb3 = this.getWeb3.bind(this);
   }
+
+  async getWeb3() {
+    await SetWeb3();
+    const userAddress = await defaultAddress();
+
+    this.setState({
+      userAddress: userAddress,
+    });
+  }
+
+  toggleDropdown() {
+    this.setState({
+      ...this.state,
+      ...{
+        dropdownOpen: !this.state.dropdownOpen,
+      },
+    });
+  }
+
+  async loginUser() {
+    try {
+      const resp = await login(this.state.email, this.state.password);
+      if (resp) {
+        console.log(resp);
+        this.toggle();
+
+        localStorage.setItem("loggedIn", true);
+        localStorage.setItem("profile", resp);
+
+        this.setState({ loggedIn: true });
+      }
+    } catch (error) {
+      console.log("eroor", error);
+    }
+  }
+
+  logout() {
+    try {
+      localStorage.setItem("loggedIn", false);
+      localStorage.setItem("profile", null);
+
+      this.setState({ loggedIn: false });
+    } catch (error) {
+      console.log("eroor", error);
+    }
+  }
+
   toggle() {
     this.setState({
       open: !this.state.open,
@@ -64,10 +121,22 @@ export default class NavExample extends React.Component {
     });
   }
 
+  componentDidMount() {
+    const loggedIn = localStorage.getItem('loggedIn')
+    console.log('loggedIN', loggedIn)
+    if(!loggedIn) {
+      this.setState({ loggedIn: false })
+    } else {
+      this.setState({ loggedIn: true })
+    }
+  }
+
   render() {
     const { open } = this.state;
 
     return (
+      <HashRouter>
+      
       <Navbar type="dark" className="NavBar" expand="md">
         <NavbarToggler onClick={this.toggleNavbar} />
         <Nav navbar className="ml-auto">
@@ -88,20 +157,51 @@ export default class NavExample extends React.Component {
             <NavItem>
               <NavLink
                 style={{ color: "black", paddingRight: 10 }}
-                onClick={this.toggle}
                 className="NavItem"
                 active
                 href="#"
-              >
-                Login
+              ><Link to='/'>
+              Home
+            </Link>
               </NavLink>
             </NavItem>
+            {this.state.loggedIn ? (
+              <div>
+                <NavItem>
+                  <NavLink
+                    style={{ color: "black", paddingRight: 10 }}
+                    onClick={this.logout} 
+                    className="NavItem"
+                    active
+                    href="#"
+                  >
+                    Logout
+                  </NavLink>
+                </NavItem>
+              </div>
+            ) : (
+              <div>
+                <NavItem>
+                  <NavLink
+                    style={{ color: "black", paddingRight: 10 }}
+                    onClick={this.toggle}
+                    className="NavItem"
+                    active
+                    href="#"
+                  >
+                    Login
+                  </NavLink>
+                </NavItem>
+              </div>
+            )}
             <NavItem>
               <NavLink
                 style={{ color: "black", paddingRight: 30 }}
                 className="NavItem"
               >
-                New Job
+                <Link to='/new-job'>
+                  New
+                </Link>
               </NavLink>
             </NavItem>
             {/* <Dropdown
@@ -122,23 +222,28 @@ export default class NavExample extends React.Component {
                 <DropdownItem>Something else here</DropdownItem>
               </DropdownMenu>
             </Dropdown> */}
-            <NavbarBrand
-              style={{ color: "black" }}
-              className="NavItem"
-              href="#"
-            >
-              Shards React
-            </NavbarBrand>
-            <Button pill theme="warning">
-              Warning
-            </Button>
+            {this.state.userAddress ? (
+              <Button pill theme="success">
+                Connected
+              </Button>
+            ) : (
+              <Button pill theme="warning" onClick={this.getWeb3}>
+                Wallet
+              </Button>
+            )}
             <Modal open={open} toggle={this.toggle}>
-              <ModalHeader>Header</ModalHeader>
+              <ModalHeader>Login</ModalHeader>
               <ModalBody>
                 <Form>
                   <FormGroup>
                     <label htmlFor="#username">Username</label>
-                    <FormInput id="#username" placeholder="Username" />
+                    <FormInput
+                      id="#username"
+                      placeholder="Username"
+                      onChange={(e) => {
+                        this.setState({ email: e.target.value });
+                      }}
+                    />
                   </FormGroup>
                   <FormGroup>
                     <label htmlFor="#password">Password</label>
@@ -146,10 +251,13 @@ export default class NavExample extends React.Component {
                       type="password"
                       id="#password"
                       placeholder="Password"
+                      onChange={(e) => {
+                        this.setState({ password: e.target.value });
+                      }}
                     />
                   </FormGroup>
-                  <Button pill theme="warning">
-                    Warning
+                  <Button pill theme="warning" onClick={this.loginUser}>
+                    Login
                   </Button>
                 </Form>
               </ModalBody>
@@ -157,6 +265,7 @@ export default class NavExample extends React.Component {
           </Nav>
         </Collapse>
       </Navbar>
+      </HashRouter>
     );
   }
 }

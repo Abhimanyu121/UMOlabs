@@ -77,50 +77,50 @@ export default class Categories extends React.Component {
             <div className="FilterDiv">
               {" "}
               <Row>
-                <p className="mb-2 FilterHead">Filter The Jobs By :</p>
+                <p className="mb-2 FilterHead">Filter By Categories:</p>
               </Row>
               <Row className="Filter">
                 {" "}
-                <FormRadio style={{ color: "black" }}>Orange</FormRadio>{" "}
+                <FormRadio style={{ color: "black" }}>Graphics and Design</FormRadio>{" "}
               </Row>
               <Row className="Filter">
-                <FormRadio>Lemon</FormRadio>
+                <FormRadio>Digital Marketing</FormRadio>
               </Row>
               <Row className="Filter">
-                <FormRadio className="Filter">Kiwi</FormRadio>
+                <FormRadio className="Filter">Legal</FormRadio>
               </Row>
               <Row className="Filter">
                 {" "}
-                <FormRadio style={{ color: "black" }}>Orange</FormRadio>{" "}
+                <FormRadio style={{ color: "black" }}>Programming and Tech</FormRadio>{" "}
               </Row>
               <Row className="Filter">
-                <FormRadio>Lemon</FormRadio>
+                <FormRadio>Business</FormRadio>
               </Row>
               <Row className="Filter">
-                <FormRadio className="Filter">Kiwi</FormRadio>
+                <FormRadio className="Filter">Lifestyle</FormRadio>
               </Row>
               <Row>
                 <p className="mb-2 FilterHead">Sort By:</p>
               </Row>
               <Row className="Filter">
                 {" "}
-                <FormRadio style={{ color: "black" }}>Orange</FormRadio>{" "}
+                <FormRadio style={{ color: "black" }}>Lowest Price</FormRadio>{" "}
               </Row>
               <Row className="Filter">
-                <FormRadio>Lemon</FormRadio>
+                <FormRadio>Highest Price</FormRadio>
               </Row>
               <Row className="Filter">
-                <FormRadio className="Filter">Kiwi</FormRadio>
+                <FormRadio className="Filter">Number of Proposals</FormRadio>
               </Row>
               <Row className="Filter">
                 {" "}
-                <FormRadio style={{ color: "black" }}>Orange</FormRadio>{" "}
+                <FormRadio style={{ color: "black" }}>Latest</FormRadio>{" "}
               </Row>
               <Row className="Filter">
-                <FormRadio>Lemon</FormRadio>
+                <FormRadio>Oldest</FormRadio>
               </Row>
               <Row className="Filter">
-                <FormRadio className="Filter">Kiwi</FormRadio>
+                <FormRadio className="Filter">Delivery Time</FormRadio>
               </Row>
             </div>
           </Col>

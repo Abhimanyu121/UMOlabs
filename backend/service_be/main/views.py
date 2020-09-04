@@ -1,15 +1,18 @@
 import json
 
 from django.shortcuts import render
+from django.contrib.auth import authenticate
 
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import CreateModelMixin, UpdateModelMixin, DestroyModelMixin, ListModelMixin, RetrieveModelMixin
+from rest_framework.exceptions import ValidationError
 
 from .models import User, Proposal, Job
 from .serializers import JobSerializer, UserSerializer, ProposalSerializer
+
 
 class RootView(APIView):
 
@@ -114,3 +117,29 @@ class ProposalsDetail(RetrieveModelMixin,
 
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
+
+
+class Login(APIView):
+
+    def post(self, request):
+        data = request.data
+
+        email = data['email']
+        password = data['password']
+
+        user = authenticate(username=email, password=password)
+
+        if not user:
+            msg = 'Unable to log in with provided credentials.'
+            raise ValidationError(msg, code='authorization')
+
+        resp = {
+            'profile': {
+                'id': user.id,
+                'email': user.email,
+                'eth_address': user.eth_address,
+                'about': user.about
+            }
+        }
+
+        return Response(json.dumps(resp), status=status.HTTP_200_OK)

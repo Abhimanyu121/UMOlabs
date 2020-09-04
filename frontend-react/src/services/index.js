@@ -31,10 +31,10 @@ export const createAccount = async (first_name, last_name, email, password) => {
 };
 
 export const login = async (email, password) => {
-  const resp = await fetch("http://127.0.0.1:8000/api/users/login/", {
-    method: "post",
+  const resp = await fetch("http://127.0.0.1:8000/api/login", {
+    method: "POST",
     body: JSON.stringify({
-      username: email,
+      email,
       password,
     }),
     headers: {
@@ -86,7 +86,7 @@ export const createProposal = async (
   proposer,
   proposal_job
 ) => {
-  const resp = await fetch("http://127.0.0.1:8000/api/proposals/", {
+  const resp = await fetch("http://127.0.0.1:8000/api/proposals", {
     method: "post",
     body: JSON.stringify({
       title,

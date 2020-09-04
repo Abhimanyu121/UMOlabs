@@ -25,7 +25,7 @@
 }
 .FilterDiv {
   width: 90%;
-
+  padding: 8%;
   background-color: #fbfcfd;
 }
 .FilterHead {
@@ -72,3 +72,9 @@
   top: 10%;
   background-color: #;
 } */
+
+
+.row {
+  margin-right: 0;
+  margin-left: 0;
+}

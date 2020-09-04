@@ -38,9 +38,7 @@ export default class NewJob extends React.Component {
       description: "",
       budget: "",
       skills_required: "",
-      employer: {
-        id: "961908c1-0ea4-4413-9345-86d1e434e09c",
-      },
+      profile: {}
     };
 
     this.toggle = this.toggle.bind(this);
@@ -49,6 +47,21 @@ export default class NewJob extends React.Component {
 
   toggle() {
     this.setState({ open: !this.state.open });
+  }
+
+  componentDidMount() {
+    const loggedIn = localStorage.getItem('loggedIn')
+    if(loggedIn) {
+      const profile = localStorage.getItem('profile')
+      console.log('profile', profile)
+      const jsonProfile = JSON.parse(profile)
+      console.log(jsonProfile)
+      this.setState({ profile: jsonProfile })
+      console.log(this.state);
+    }
+    else {
+      this.toggle()
+    }
   }
 
   async createNewJob() {
@@ -78,7 +91,7 @@ export default class NewJob extends React.Component {
             <FormGroup>
               <Row>
                 <label className="Label" htmlFor="#name">
-                  Choose A Name For Your Project
+                  Choose A Name For Your Project {this.state.profile.eth_address}
                 </label>
               </Row>
               <FormInput
