@@ -134,7 +134,12 @@ class Login(APIView):
             raise ValidationError(msg, code='authorization')
 
         resp = {
-            'status': True
+            'profile': {
+                'id': user.id,
+                'email': user.email,
+                'eth_address': user.eth_address,
+                'about': user.about
+            }
         }
 
         return Response(json.dumps(resp), status=status.HTTP_200_OK)

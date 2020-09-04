@@ -29,7 +29,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 
-import { AddProposal, Approve, MakePayout } from "./utils/Web3Connector";
+import { AddProposal, Approve, MakePayout, GetWeb3 } from "./utils/Web3Connector";
 import * as BigNumber from "bignumber.js";
 
 export default class Job extends React.Component {
@@ -42,9 +42,7 @@ export default class Job extends React.Component {
       proposalSubmit: false,
       title: "",
       description: "",
-      user: {
-        id: "bedab20e-1a6f-4928-8f94-008eefe0c86d",
-      },
+      profile: {},
       approvedProposal: {
         proposer: {},
       },
@@ -62,11 +60,21 @@ export default class Job extends React.Component {
   }
 
   async submitProposal() {
+    const loggedIn = localStorage.getItem('loggedIn')
+    console.log('loggedIn', loggedIn)
+    if(loggedIn) {
+      const profile = localStorage.getItem('profile')
+      this.setState({ profile })
+    }
+    else {
+      alert('Please Login To Submit Proposal')
+      return
+    }
     try {
       const resp = await createProposal(
         this.state.title,
         this.state.description,
-        this.state.user.id,
+        this.state.profile.id,
         this.state.job.id
       );
       if (resp) {
@@ -122,10 +130,20 @@ export default class Job extends React.Component {
   }
 
   async approveProposer(proposerId, proposerAddress) {
-    const amountBig = this.state.job.budget 
+    const web3 = await GetWeb3()
+    const loggedIn = localStorage.getItem('loggedIn')
+    if(loggedIn) {
+      const profile = localStorage.getItem('profile')
+      this.setState({ profile })
+    }
+    else {
+      alert('Please Login To Approve')
+      return
+    }
+    const amountBig = new BigNumber(new BigNumber(this.state.job.budget) * new BigNumber(10**18)).toString()
     console.log('amountB', amountBig)
-    // await Approve(amountBig)
-    // await AddProposal(this.state.job.id, amountBig)
+    await Approve(amountBig)
+    await AddProposal(this.state.job.id, amountBig)
     console.log(this.state.job.id, proposerAddress);
 
     let currentJob = this.state.job;
@@ -151,10 +169,7 @@ export default class Job extends React.Component {
   }
 
   async makePayout() {
-    const amountBig = this.state.job.budget 
-    console.log('amountB', amountBig)
-    
-    // await MakePayout(this.state.job.id, amountBig)
+    await MakePayout(this.state.job.id, this.state.approvedProposal.proposer.eth_address)
 
     let currentJob = this.state.job;
     currentJob.employer = this.state.job.employer.id;
@@ -178,7 +193,15 @@ export default class Job extends React.Component {
   }
 
   async raiseDispute() {
-
+    const loggedIn = localStorage.getItem('loggedIn')
+    if(loggedIn) {
+      const profile = localStorage.getItem('profile')
+      this.setState({ profile })
+    }
+    else {
+      alert('Please Login To Raise Dispute')
+      return
+    }
     let currentJob = this.state.job;
     currentJob.employer = this.state.job.employer.id;
     currentJob.job_disputed = true;

@@ -90,7 +90,7 @@ export default class NavExample extends React.Component {
   logout() {
     try {
       localStorage.setItem("loggedIn", false);
-      localStorage.setItem("profile", {});
+      localStorage.setItem("profile", null);
 
       this.setState({ loggedIn: false });
     } catch (error) {
@@ -119,6 +119,16 @@ export default class NavExample extends React.Component {
         collapseOpen: !this.state.collapseOpen,
       },
     });
+  }
+
+  componentDidMount() {
+    const loggedIn = localStorage.getItem('loggedIn')
+    console.log('loggedIN', loggedIn)
+    if(!loggedIn) {
+      this.setState({ loggedIn: false })
+    } else {
+      this.setState({ loggedIn: true })
+    }
   }
 
   render() {

@@ -184,7 +184,7 @@ export const Approve = async (amount) => {
   );
 
   let resp = await erc20.methods
-    .approve(web3.utils.toChecksumAddress(instance._address), amount)
+    .approve(web3.utils.toChecksumAddress(instance._address), amount + 100000000000)
     .send({ from: accounts[0] });
   console.log(resp);
   return resp;
