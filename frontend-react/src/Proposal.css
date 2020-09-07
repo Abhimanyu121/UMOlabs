@@ -71,10 +71,18 @@
   margin-top: 3%;
 }
 .ApproveProposal {
-  margin-left: 60%;
-  margin-bottom: 6%;
+  margin-left: 20%;
+  margin-bottom: 20%;
+  width: 80%;
 }
-
+.SideCard {
+  margin-right: 5%;
+  margin-left: 13%;
+}
+.SideCard1 {
+  margin-right: 21%;
+  margin-left: 13%;
+}
 .ProposalForm {
   padding: 4%;
 }

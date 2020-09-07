@@ -22,7 +22,7 @@ import { BrowserRouter as Router, Link, HashRouter } from "react-router-dom";
 import logo from "./logo.png";
 import "./Categories.css";
 import { shortDescription } from "./utils";
-
+import "./Hover.css";
 import { useHistory } from "react-router-dom";
 
 export default class Categories extends React.Component {
@@ -81,7 +81,9 @@ export default class Categories extends React.Component {
               </Row>
               <Row className="Filter">
                 {" "}
-                <FormRadio style={{ color: "black" }}>Graphics and Design</FormRadio>{" "}
+                <FormRadio style={{ color: "black" }}>
+                  Graphics and Design
+                </FormRadio>{" "}
               </Row>
               <Row className="Filter">
                 <FormRadio>Digital Marketing</FormRadio>
@@ -91,7 +93,9 @@ export default class Categories extends React.Component {
               </Row>
               <Row className="Filter">
                 {" "}
-                <FormRadio style={{ color: "black" }}>Programming and Tech</FormRadio>{" "}
+                <FormRadio style={{ color: "black" }}>
+                  Programming and Tech
+                </FormRadio>{" "}
               </Row>
               <Row className="Filter">
                 <FormRadio>Business</FormRadio>
@@ -104,7 +108,9 @@ export default class Categories extends React.Component {
               </Row>
               <Row className="Filter">
                 {" "}
-                <FormRadio style={{ color: "black" }}>Lowest Price</FormRadio>{" "}
+                <FormRadio style={{ color: "black" }}>
+                  Lowest Price
+                </FormRadio>{" "}
               </Row>
               <Row className="Filter">
                 <FormRadio>Highest Price</FormRadio>
@@ -130,7 +136,7 @@ export default class Categories extends React.Component {
                 ? this.state.jobs.map((job, key) => (
                     <div
                       key={key}
-                      className="Jobs"
+                      className="Jobs hvr-underline-reveal"
                       onClick={() => {
                         this.props.history.push(`/job/${job.id}`);
                       }}
@@ -161,11 +167,11 @@ export default class Categories extends React.Component {
                           {job.skills_required.join(", ")}
                         </p>
                       </Row>
-                      <Row className="SellerNameIcon">
+                      <Row>
                         <img
                           width="3%"
                           height="2%"
-                          className="Avatar"
+                          className="SellerNameIcon"
                           src={logo}
                         />
                         <h6 className="SellName">Alison Grey</h6>

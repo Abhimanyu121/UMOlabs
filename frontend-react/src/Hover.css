@@ -2535,8 +2535,8 @@
 .hvr-underline-reveal:hover:before,
 .hvr-underline-reveal:focus:before,
 .hvr-underline-reveal:active:before {
-  -webkit-transform: translateY(0);
-  transform: translateY(0);
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
 }
 
 /* Overline Reveal */
