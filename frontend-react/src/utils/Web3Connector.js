@@ -165,6 +165,9 @@ export const AddProposal = async (uuid, amount) => {
 };
 
 export const MakePayout = async (uuid, address) => {
+  if (!web3) {
+    await GetWeb3();
+  }
   const accounts = await web3.eth.getAccounts();
   let resp = await instance.methods
     .makePayout(uuid, address)

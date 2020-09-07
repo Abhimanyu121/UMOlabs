@@ -32,6 +32,7 @@ export default class Categories extends React.Component {
       open: false,
       jobs: [],
     };
+
     this.toggle = this.toggle.bind(this);
   }
 

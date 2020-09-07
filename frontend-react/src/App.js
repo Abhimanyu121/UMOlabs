@@ -13,6 +13,7 @@ import Navbar from "./Navbar";
 import Categories from "./Categories";
 import NewJob from "./NewJob";
 import Job from "./Job";
+
 function App() {
   return (
     <div className="App">

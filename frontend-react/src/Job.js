@@ -169,6 +169,7 @@ export default class Job extends React.Component {
     })
       .then((resp) => resp.json())
       .then((json) => {
+        this.setState({ currentJob: json });
         console.log("json", json);
       });
 
@@ -183,7 +184,7 @@ export default class Job extends React.Component {
 
     let currentJob = this.state.job;
     currentJob.employer = this.state.job.employer.id;
-    currentJob.payout_released = true;
+    currentJob.payout_released = "True";
 
     console.log("currentJob", currentJob.id);
 
@@ -197,6 +198,7 @@ export default class Job extends React.Component {
       .then((resp) => resp.json())
       .then((json) => {
         console.log("json", json);
+        this.setState({ currentJob: json });
       });
 
     // const amountBig = new BigNumber(new BigNumber(this.state.job.budget) * new BigNumber(10 ** 18))
@@ -213,7 +215,7 @@ export default class Job extends React.Component {
     }
     let currentJob = this.state.job;
     currentJob.employer = this.state.job.employer.id;
-    currentJob.job_disputed = true;
+    currentJob.job_disputed = "True";
 
     console.log("currentJob", currentJob);
 
@@ -227,6 +229,7 @@ export default class Job extends React.Component {
       .then((resp) => resp.json())
       .then((json) => {
         console.log("json", json);
+        this.setState({ currentJob: json });
       });
 
     // const amountBig = new BigNumber(new BigNumber(this.state.job.budget) * new BigNumber(10 ** 18))
@@ -290,71 +293,9 @@ export default class Job extends React.Component {
                   like Aldus PageMaker including versions of Lorem Ipsum.
                 </p>
                 <Row>
-                  <Row>
-                    <h5 className="Heading1">Proposals</h5>
-                  </Row>
-
-                  {this.state.job.approved ? (
+                  {this.state.job.approved ? null : (
                     <div>
-                      {
-                        <div>
-                          <Row className="NameJob">
-                            <img
-                              width="4%"
-                              height="5%"
-                              className="Avatar"
-                              src={logo}
-                            />
-                            <h5 className="ComHead">
-                              {this.state.approvedProposal.proposer.first_name +
-                                " " +
-                                this.state.approvedProposal.proposer.last_name}
-                            </h5>
-                          </Row>
-                          <Row>
-                            <h6 className="EthDesc">
-                              Eth Address:{" "}
-                              {this.state.approvedProposal.proposer.eth_address}
-                            </h6>
-                          </Row>
-                          <div className="PatentComment JustifyContent">
-                            <p>{this.state.approvedProposal.description}</p>
-                          </div>
-                          <Container>
-                            <Row>
-                              <Col>
-                                <Button
-                                  className="ApproveProposal hvr-icon-bounce"
-                                  onClick={() => this.makePayout()}
-                                >
-                                  <FontAwesomeIcon
-                                    icon={faThumbsUp}
-                                    style={{ marginRight: 7 }}
-                                    className="hvr-icon"
-                                  />{" "}
-                                  Release Payout
-                                </Button>
-                              </Col>
-                              <Col>
-                                <Button
-                                  className="ApproveProposal hvr-icon-bounce"
-                                  onClick={() => this.raiseDispute()}
-                                >
-                                  <FontAwesomeIcon
-                                    icon={faThumbsDown}
-                                    style={{ marginRight: 7 }}
-                                    className="hvr-icon"
-                                  />{" "}
-                                  Raise Dispute
-                                </Button>
-                              </Col>
-                            </Row>{" "}
-                          </Container>
-                        </div>
-                      }
-                    </div>
-                  ) : (
-                    <div>
+                      <h5 className="Heading1">Proposals</h5>
                       {this.state.proposals
                         ? this.state.proposals.map((proposal, key) => (
                             <div key={key}>
@@ -433,21 +374,87 @@ export default class Job extends React.Component {
           </Col>
           <Col>
             <div className="SubPat">
-              <CardHeader></CardHeader>
+              {this.state.job.approved ? (
+                <div>
+                  {
+                    <div>
+                      <h4 style={{ marginBottom: 25 }}>Manage Project</h4>
+                      <Row className="NameJob">
+                        <img
+                          width="4%"
+                          height="5%"
+                          className="Avatar"
+                          src={logo}
+                        />
+                        <h5 className="ComHead">
+                          {this.state.approvedProposal.proposer.first_name +
+                            " " +
+                            this.state.approvedProposal.proposer.last_name}
+                        </h5>
+                      </Row>
+                      <Row>
+                        <h6 className="EthDesc">
+                          Eth Address:{" "}
+                          {this.state.approvedProposal.proposer.eth_address}
+                        </h6>
+                      </Row>
+                        {this.state.job.payout_released ? (
+                          <div>
+                            <h4>Job Successfully Completed</h4>
+                          </div>
+                        ) : (
+                            <Row>
+                              <Col>
+                              <Button
+                                className="ApproveProposal hvr-icon-bounce"
+                                onClick={() => this.makePayout()}
+                              >
+                                <FontAwesomeIcon
+                                  icon={faThumbsUp}
+                                  style={{ marginRight: 7 }}
+                                  className="hvr-icon"
+                                />{" "}
+                                Release Payout
+                              </Button>
+                            </Col>
+                            <Col>
+                              <Button
+                                className="ApproveProposal hvr-icon-bounce"
+                                onClick={() => this.raiseDispute()}
+                              >
+                                <FontAwesomeIcon
+                                  icon={faThumbsDown}
+                                  style={{ marginRight: 7 }}
+                                  className="hvr-icon"
+                                />{" "}
+                                Raise Dispute
+                              </Button>
+                            </Col>
+                            </Row>
+                        )}
+                    </div>
+                  }
+                </div>
+              ) : (
+                <div>
+                  <CardHeader></CardHeader>
 
-              <CardBody>
-                <h4 style={{ marginBottom: 25 }}>Project Details</h4>
-                <Row>
-                  <h5 className="SideCard1">Budget </h5> {this.state.job.budget}
-                </Row>
-                <Row>
-                  <h5 className="SideCard">Skills Required </h5>{" "}
-                  {this.state.job.skills_required.join(",")}
-                </Row>
-                <Button onClick={this.toggle} style={{ marginTop: 20 }}>
-                  Apply
-                </Button>
-              </CardBody>
+                  <CardBody>
+                    <h4 style={{ marginBottom: 25 }}>Project Details</h4>
+                    <Row>
+                      <h5 className="SideCard1">Budget </h5>{" "}
+                      {this.state.job.budget}
+                    </Row>
+                    <Row>
+                      <h5 className="SideCard">Skills Required </h5>{" "}
+                      {this.state.job.skills_required.join(",")}
+                    </Row>
+                    <Button onClick={this.toggle} style={{ marginTop: 20 }}>
+                      Apply
+                    </Button>
+                  </CardBody>
+                </div>
+              )}
             </div>
           </Col>
         </Row>

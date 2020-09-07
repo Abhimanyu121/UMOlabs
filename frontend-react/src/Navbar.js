@@ -4,14 +4,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Navbar,
   NavbarToggler,
-  NavbarBrand,
   Nav,
   NavItem,
   NavLink,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
   InputGroup,
   InputGroupAddon,
   InputGroupText,
@@ -25,7 +20,6 @@ import {
   FormGroup,
 } from "shards-react";
 import {
-  faThumbsUp,
   faHome,
   faUser,
   faPlus,
@@ -48,14 +42,14 @@ export default class NavExample extends React.Component {
       password: "",
       userAddress: "",
       loggedIn: false,
+      open: false
     };
 
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.toggleNavbar = this.toggleNavbar.bind(this);
-    this.state = { open: false };
     this.toggle = this.toggle.bind(this);
     this.loginUser = this.loginUser.bind(this);
-    this.logout = this.logout.bind(this);
+    this.logoutUser = this.logoutUser.bind(this);
     this.getWeb3 = this.getWeb3.bind(this);
   }
 
@@ -77,10 +71,10 @@ export default class NavExample extends React.Component {
     });
   }
 
-  async loginUser() {
+  loginUser() {
     try {
-      const resp = await login(this.state.email, this.state.password);
-      if (resp) {
+      login(this.state.email, this.state.password)
+      .then((resp) => {
         console.log(resp);
         this.toggle();
 
@@ -88,17 +82,19 @@ export default class NavExample extends React.Component {
         localStorage.setItem("profile", resp);
 
         this.setState({ loggedIn: true });
-      }
+      })
     } catch (error) {
       console.log("eroor", error);
     }
   }
 
-  logout() {
+  logoutUser() {
     try {
       localStorage.setItem("loggedIn", false);
       localStorage.setItem("profile", null);
-
+      console.log('Loggin out')
+      console.log(localStorage.getItem("loggedIn"))
+      console.log(localStorage.getItem("profile"))
       this.setState({ loggedIn: false });
     } catch (error) {
       console.log("eroor", error);
@@ -129,12 +125,14 @@ export default class NavExample extends React.Component {
   }
 
   componentDidMount() {
-    const loggedIn = localStorage.getItem("loggedIn");
-    console.log("loggedIN", loggedIn);
-    if (!loggedIn) {
-      this.setState({ loggedIn: false });
-    } else {
+    const isLoggedIn = localStorage.getItem("loggedIn")
+    console.log('isLoggedIn', isLoggedIn)
+    if ( isLoggedIn == 'true' ) {
+      console.log('true', localStorage.getItem("loggedIn"))
       this.setState({ loggedIn: true });
+    } else {
+      console.log('false', localStorage.getItem("loggedIn"))
+      this.setState({ loggedIn: false });
     }
   }
 
@@ -165,7 +163,7 @@ export default class NavExample extends React.Component {
                   <NavItem>
                     <NavLink
                       style={{ color: "black", paddingRight: 10 }}
-                      onClick={this.logout}
+                      onClick={this.logoutUser}
                       className="NavItem"
                       active
                       href="#"

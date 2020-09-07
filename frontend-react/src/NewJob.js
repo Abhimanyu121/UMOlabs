@@ -24,6 +24,8 @@ import {
   DropdownToggle,
   DropdownMenu,
   FormCheckbox,
+  Modal,
+  ModalHeader
 } from "shards-react";
 import "./NewJob.css";
 import { createJob } from "./services";
@@ -34,14 +36,16 @@ export default class NewJob extends React.Component {
 
     this.state = {
       open: false,
+      errorOpen: false,
       title: "",
       description: "",
       budget: "",
       skills_required: "",
-      profile: {}
+      profile: {eth_address: ''}
     };
 
     this.toggle = this.toggle.bind(this);
+    this.toggleError = this.toggleError.bind(this);
     this.createNewJob = this.createNewJob.bind(this);
   }
 
@@ -49,9 +53,13 @@ export default class NewJob extends React.Component {
     this.setState({ open: !this.state.open });
   }
 
+  toggleError() {
+    this.setState({ errorOpen: !this.state.errorOpen });
+  }
+
   componentDidMount() {
     const loggedIn = localStorage.getItem('loggedIn')
-    if(loggedIn) {
+    if(loggedIn === 'true') {
       const profile = localStorage.getItem('profile')
       console.log('profile', profile)
       const jsonProfile = JSON.parse(profile)
@@ -60,7 +68,8 @@ export default class NewJob extends React.Component {
       console.log(this.state);
     }
     else {
-      this.toggle()
+      console.log('False', 'not login')
+      this.toggleError()
     }
   }
 
@@ -196,6 +205,11 @@ export default class NewJob extends React.Component {
             </Button>
           </Form>
         </div>
+        <Modal size="lg" open={this.state.errorOpen} toggle={this.toggleError}>
+              <ModalHeader>
+                Please Login to Create Job
+              </ModalHeader>
+        </Modal>
       </div>
     );
   }
