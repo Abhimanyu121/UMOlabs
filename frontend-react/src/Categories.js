@@ -135,57 +135,102 @@ export default class Categories extends React.Component {
             <div>
               {this.state.jobs.length
                 ? this.state.jobs.map((job, key) => (
-                    <div
+                    <Card
                       key={key}
                       className="Jobs hvr-underline-reveal"
                       onClick={() => {
                         this.props.history.push(`/job/${job.id}`);
                       }}
                     >
-                      <Row>
-                        <Col>
-                          <h4 className="JobHeading">
-                            <FontAwesomeIcon
-                              icon={faLaptop}
-                              style={{ marginRight: 7 }}
-                            />
-                            {job.title}
-                          </h4>
-                        </Col>
+                      <CardBody>
+                        <Row>
+                          <Col>
+                            <h4 className="JobHeading">
+                              <FontAwesomeIcon
+                                icon={faLaptop}
+                                style={{ marginRight: 7 }}
+                              />
+                              {job.title}
+                            </h4>
+                          </Col>
 
-                        <Col>
-                          <h4 className="JobHeading1">$25-$30/Hour</h4>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <p className="JobPara">
-                          {shortDescription(job.description)}
-                        </p>
-                      </Row>
-                      <Row>
-                        <p className="JobPara">
-                          <b>Skills Required: </b>
-                          {job.skills_required.join(", ")}
-                        </p>
-                      </Row>
-                      <Row>
-                        <img
-                          width="3%"
-                          height="2%"
-                          className="SellerNameIcon"
-                          src={logo}
-                        />
-                        <h6 className="SellName">Alison Grey</h6>
-                      </Row>
+                          <Col>
+                            <h4 className="JobHeading1">$25-$30/Hour</h4>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <p className="JobPara">
+                            {shortDescription(job.description)}
+                          </p>
+                        </Row>
+                        <Row>
+                          <p className="JobPara">
+                            <b>Skills Required: </b>
+                            {job.skills_required.join(", ")}
+                          </p>
+                        </Row>
+                        <Row>
+                          <img
+                            width="3%"
+                            height="2%"
+                            className="SellerNameIcon"
+                            src={logo}
+                          />
+                          <h6 className="SellName">Alison Grey</h6>
+                        </Row>
+                      </CardBody>
+                    </Card>
+                    // <div
+                    //   key={key}
+                    //   className="Jobs hvr-underline-reveal"
+                    //   onClick={() => {
+                    //     this.props.history.push(`/job/${job.id}`);
+                    //   }}
+                    // >
+                    //   <Row>
+                    //     <Col>
+                    //       <h4 className="JobHeading">
+                    //         <FontAwesomeIcon
+                    //           icon={faLaptop}
+                    //           style={{ marginRight: 7 }}
+                    //         />
+                    //         {job.title}
+                    //       </h4>
+                    //     </Col>
 
-                      {/* <Link
-                        style={{ color: "white" }}
-                        className="Link"
-                        to={`/job/${job.id}`}
-                      >
-                        Read more &rarr;
-                      </Link> */}
-                    </div>
+                    //     <Col>
+                    //       <h4 className="JobHeading1">$25-$30/Hour</h4>
+                    //     </Col>
+                    //   </Row>
+                    //   <Row>
+                    //     <p className="JobPara">
+                    //       {shortDescription(job.description)}
+                    //     </p>
+                    //   </Row>
+                    //   <Row>
+                    //     <p className="JobPara">
+                    //       <b>Skills Required: </b>
+                    //       {job.skills_required.join(", ")}
+                    //     </p>
+                    //   </Row>
+                    //   <Row>
+                    //     <img
+                    //       width="3%"
+                    //       height="2%"
+                    //       className="SellerNameIcon"
+                    //       src={logo}
+                    //     />
+                    //     <h6 className="SellName">Alison Grey</h6>
+                    //   </Row>
+
+                    //   {/* <Link
+                    //     style={{ color: "white" }}
+                    //     className="Link"
+                    //     to={`/job/${job.id}`}
+                    //   >
+                    //     Read more &rarr;
+                    //   </Link> */}
+                    // </div>
                   ))
                 : null}
             </div>

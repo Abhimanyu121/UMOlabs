@@ -46,7 +46,7 @@
 }
 .JobHeading {
   color: Black;
-  margin-left: 4%;
+  text-align: left;
   margin-top: 3%;
 }
 .JobHeading1 {
@@ -63,7 +63,6 @@
   margin-left: 0.5%;
 }
 .SellerNameIcon {
-  margin-bottom: 2%;
   margin-left: 8%;
 }
 /* .FilterDiv.sticky {
