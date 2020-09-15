@@ -14,9 +14,10 @@ import {
   ModalBody,
   ModalHeader,
   FormRadio,
+  Badge,
 } from "shards-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLaptop } from "@fortawesome/free-solid-svg-icons";
+import { faLaptop, faBriefcase } from "@fortawesome/free-solid-svg-icons";
 import { BrowserRouter as Router, Link, HashRouter } from "react-router-dom";
 
 import logo from "./logo.png";
@@ -64,11 +65,31 @@ export default class Categories extends React.Component {
             </h1>
           </Row>
           <Row>
-            <Button className="Btn-1" outline theme="light">
-              Dark
+            <Button
+              className="Btn-1"
+              className="hvr-icon-pop Btn-1"
+              outline
+              theme="light"
+            >
+              Browse Jobs{" "}
+              <FontAwesomeIcon
+                icon={faBriefcase}
+                className="hvr-icon"
+                style={{ marginLeft: 7 }}
+              />
             </Button>
-            <Button className="Btn-2" outline theme="light">
-              Dark
+            <Button
+              className="Btn-2"
+              className="hvr-icon-pop Btn-2"
+              outline
+              theme="light"
+            >
+              Create Job
+              <FontAwesomeIcon
+                icon={faBriefcase}
+                className="hvr-icon"
+                style={{ marginLeft: 7 }}
+              />
             </Button>
           </Row>
         </div>
@@ -135,51 +156,97 @@ export default class Categories extends React.Component {
             <div>
               {this.state.jobs.length
                 ? this.state.jobs.map((job, key) => (
-                    <Card
+                    <div
+                      class="JobsContainer"
                       key={key}
-                      className="Jobs hvr-underline-reveal"
                       onClick={() => {
                         this.props.history.push(`/job/${job.id}`);
                       }}
                     >
-                      <CardBody>
-                        <Row>
-                          <Col>
-                            <h4 className="JobHeading">
-                              <FontAwesomeIcon
-                                icon={faLaptop}
-                                style={{ marginRight: 7 }}
-                              />
-                              {job.title}
-                            </h4>
-                          </Col>
-
-                          <Col>
-                            <h4 className="JobHeading1">$25-$30/Hour</h4>
-                          </Col>
-                        </Row>
-                        <Row>
+                      <div class="Jobs">
+                        <div class="JobsInfo">
+                          <h4 className="JobHeading">
+                            <FontAwesomeIcon
+                              icon={faLaptop}
+                              style={{ marginRight: 7 }}
+                            />
+                            {job.title}
+                          </h4>
                           <p className="JobPara">
                             {shortDescription(job.description)}
                           </p>
-                        </Row>
-                        <Row>
                           <p className="JobPara">
-                            <b>Skills Required: </b>
-                            {job.skills_required.join(", ")}
+                            {job.skills_required.map((skill) => (
+                              <Badge
+                                className="Skills"
+                                outline
+                                theme="secondary"
+                              >
+                                {skill}
+                              </Badge>
+                            ))}
                           </p>
-                        </Row>
-                        <Row>
+                        </div>
+                        <div class="JobsPreview">
+                          <h4 className="JobHeading1">$25-$30/Hour</h4>
                           <img
-                            width="3%"
-                            height="2%"
+                            width="20%"
+                            height="20%"
                             className="SellerNameIcon"
                             src={logo}
                           />
                           <h6 className="SellName">Alison Grey</h6>
-                        </Row>
-                      </CardBody>
-                    </Card>
+                        </div>
+                      </div>
+                    </div>
+
+                    // <Card
+                    //   key={key}
+                    //   className="Jobs hvr-underline-reveal"
+                    //   onClick={() => {
+                    //     this.props.history.push(`/job/${job.id}`);
+                    //   }}
+                    // >
+                    //   <CardBody>
+                    //     <Row>
+                    //       <Col>
+                    //         <h4 className="JobHeading">
+                    //           <FontAwesomeIcon
+                    //             icon={faLaptop}
+                    //             style={{ marginRight: 7 }}
+                    //           />
+                    //           {job.title}
+                    //         </h4>
+                    //       </Col>
+
+                    //       <Col>
+                    //         <h4 className="JobHeading1">$25-$30/Hour</h4>
+                    //       </Col>
+                    //     </Row>
+                    //     <Row>
+                    //       <p className="JobPara">
+                    //         {shortDescription(job.description)}
+                    //       </p>
+                    //     </Row>
+                    //     <Row>
+                    //       <p className="JobPara">
+                    //        {job.skills_required.map((skill) =>
+                    //       <Badge outline pill theme="secondary">
+                    //         {skill}
+                    //       </Badge>)}
+                    //       </p>
+                    //     </Row>
+                    //     <Row>
+                    //       <img
+                    //         width="3%"
+                    //         height="2%"
+                    //         className="SellerNameIcon"
+                    //         src={logo}
+                    //       />
+                    //       <h6 className="SellName">Alison Grey</h6>
+                    //     </Row>
+                    //   </CardBody>
+                    // </Card>
                     // <div
                     //   key={key}
                     //   className="Jobs hvr-underline-reveal"

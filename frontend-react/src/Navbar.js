@@ -1,5 +1,5 @@
 import React from "react";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Navbar,
@@ -21,9 +21,9 @@ import {
 } from "shards-react";
 import {
   faHome,
-  faUser,
   faPlus,
   faWallet,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
 import "./Navbar.css";
@@ -42,7 +42,7 @@ export default class NavExample extends React.Component {
       password: "",
       userAddress: "",
       loggedIn: false,
-      open: false
+      open: false,
     };
 
     this.toggleDropdown = this.toggleDropdown.bind(this);
@@ -73,8 +73,7 @@ export default class NavExample extends React.Component {
 
   loginUser() {
     try {
-      login(this.state.email, this.state.password)
-      .then((resp) => {
+      login(this.state.email, this.state.password).then((resp) => {
         console.log(resp);
         this.toggle();
 
@@ -82,7 +81,7 @@ export default class NavExample extends React.Component {
         localStorage.setItem("profile", resp);
 
         this.setState({ loggedIn: true });
-      })
+      });
     } catch (error) {
       console.log("eroor", error);
     }
@@ -92,9 +91,9 @@ export default class NavExample extends React.Component {
     try {
       localStorage.setItem("loggedIn", false);
       localStorage.setItem("profile", null);
-      console.log('Loggin out')
-      console.log(localStorage.getItem("loggedIn"))
-      console.log(localStorage.getItem("profile"))
+      console.log("Loggin out");
+      console.log(localStorage.getItem("loggedIn"));
+      console.log(localStorage.getItem("profile"));
       this.setState({ loggedIn: false });
     } catch (error) {
       console.log("eroor", error);
@@ -125,13 +124,13 @@ export default class NavExample extends React.Component {
   }
 
   componentDidMount() {
-    const isLoggedIn = localStorage.getItem("loggedIn")
-    console.log('isLoggedIn', isLoggedIn)
-    if ( isLoggedIn == 'true' ) {
-      console.log('true', localStorage.getItem("loggedIn"))
+    const isLoggedIn = localStorage.getItem("loggedIn");
+    console.log("isLoggedIn", isLoggedIn);
+    if (isLoggedIn == "true") {
+      console.log("true", localStorage.getItem("loggedIn"));
       this.setState({ loggedIn: true });
     } else {
-      console.log('false', localStorage.getItem("loggedIn"))
+      console.log("false", localStorage.getItem("loggedIn"));
       this.setState({ loggedIn: false });
     }
   }
@@ -253,14 +252,27 @@ export default class NavExample extends React.Component {
               </DropdownMenu>
             </Dropdown> */}
               {this.state.userAddress ? (
-                <Button pill theme="success">
+                <Button pill theme="warning" className="hvr-icon-pop">
                   Connected{" "}
-                  <FontAwesomeIcon icon={faUser} style={{ marginLeft: 3 }} />
+                  <FontAwesomeIcon
+                    className="hvr-icon"
+                    icon={faUserCircle}
+                    style={{ marginLeft: 3 }}
+                  />
                 </Button>
               ) : (
-                <Button pill theme="warning" onClick={this.getWeb3}>
+                <Button
+                  pill
+                  theme="warning"
+                  className="hvr-icon-pop"
+                  onClick={this.getWeb3}
+                >
                   Wallet{" "}
-                  <FontAwesomeIcon icon={faWallet} style={{ marginLeft: 3 }} />
+                  <FontAwesomeIcon
+                    className="hvr-icon"
+                    icon={faWallet}
+                    style={{ marginLeft: 3 }}
+                  />
                 </Button>
               )}
               <Modal open={open} toggle={this.toggle}>

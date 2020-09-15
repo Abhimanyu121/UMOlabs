@@ -292,56 +292,6 @@ export default class Job extends React.Component {
                   passages, and more recently with desktop publishing software
                   like Aldus PageMaker including versions of Lorem Ipsum.
                 </p>
-                <Row>
-                  {this.state.job.approved ? null : (
-                    <div>
-                      <h5 className="Heading1">Proposals</h5>
-                      {this.state.proposals
-                        ? this.state.proposals.map((proposal, key) => (
-                            <div key={key}>
-                              <Row className="NameJob">
-                                <img
-                                  width="4%"
-                                  height="5%"
-                                  className="Avatar"
-                                  src={logo}
-                                />
-                                <h5 className="ComHead">
-                                  {proposal.proposer.first_name +
-                                    " " +
-                                    proposal.proposer.last_name}
-                                </h5>
-                              </Row>
-                              <Row>
-                                <h6 className="EthDesc">
-                                  Eth Address: {proposal.proposer.eth_address}
-                                </h6>
-                              </Row>
-                              <div className="PatentComment JustifyContent">
-                                <p>{proposal.description}</p>
-                              </div>
-                              <Button
-                                className="ApproveProposal hvr-icon-bounce"
-                                onClick={() =>
-                                  this.approveProposer(
-                                    proposal.id,
-                                    this.state.job.budget
-                                  )
-                                }
-                              >
-                                <FontAwesomeIcon
-                                  icon={faThumbsUp}
-                                  style={{ marginRight: 7 }}
-                                  className="hvr-icon"
-                                />{" "}
-                                Approve Proposal
-                              </Button>
-                            </div>
-                          ))
-                        : null}
-                    </div>
-                  )}
-                </Row>
 
                 {/* <p>
                   <div>
@@ -378,7 +328,9 @@ export default class Job extends React.Component {
                 <div>
                   {
                     <div>
-                      <h4 style={{ marginBottom: 25 }}>Manage Project</h4>
+                      <h4 style={{ marginBottom: 25, paddingTop: 20 }}>
+                        Manage Project
+                      </h4>
                       <Row className="NameJob">
                         <img
                           width="4%"
@@ -398,40 +350,40 @@ export default class Job extends React.Component {
                           {this.state.approvedProposal.proposer.eth_address}
                         </h6>
                       </Row>
-                        {this.state.job.payout_released ? (
-                          <div>
-                            <h4>Job Successfully Completed</h4>
-                          </div>
-                        ) : (
-                            <Row>
-                              <Col>
-                              <Button
-                                className="ApproveProposal hvr-icon-bounce"
-                                onClick={() => this.makePayout()}
-                              >
-                                <FontAwesomeIcon
-                                  icon={faThumbsUp}
-                                  style={{ marginRight: 7 }}
-                                  className="hvr-icon"
-                                />{" "}
-                                Release Payout
-                              </Button>
-                            </Col>
-                            <Col>
-                              <Button
-                                className="ApproveProposal hvr-icon-bounce"
-                                onClick={() => this.raiseDispute()}
-                              >
-                                <FontAwesomeIcon
-                                  icon={faThumbsDown}
-                                  style={{ marginRight: 7 }}
-                                  className="hvr-icon"
-                                />{" "}
-                                Raise Dispute
-                              </Button>
-                            </Col>
-                            </Row>
-                        )}
+                      {this.state.job.payout_released ? (
+                        <div>
+                          <h4>Job Successfully Completed</h4>
+                        </div>
+                      ) : (
+                        <Row>
+                          <Col>
+                            <Button
+                              className="ApproveProposal hvr-icon-bounce"
+                              onClick={() => this.makePayout()}
+                            >
+                              <FontAwesomeIcon
+                                icon={faThumbsUp}
+                                style={{ marginRight: 7 }}
+                                className="hvr-icon"
+                              />{" "}
+                              Release Payout
+                            </Button>
+                          </Col>
+                          <Col>
+                            <Button
+                              className="ApproveProposal hvr-icon-bounce"
+                              onClick={() => this.raiseDispute()}
+                            >
+                              <FontAwesomeIcon
+                                icon={faThumbsDown}
+                                style={{ marginRight: 7 }}
+                                className="hvr-icon"
+                              />{" "}
+                              Raise Dispute
+                            </Button>
+                          </Col>
+                        </Row>
+                      )}
                     </div>
                   }
                 </div>
@@ -458,7 +410,56 @@ export default class Job extends React.Component {
             </div>
           </Col>
         </Row>
-
+        <Row>
+          {this.state.job.approved ? null : (
+            <div>
+              <h5 className="Heading1">Proposals</h5>
+              {this.state.proposals
+                ? this.state.proposals.map((proposal, key) => (
+                    <div key={key}>
+                      <Row className="NameJob">
+                        <img
+                          width="4%"
+                          height="5%"
+                          className="Avatar"
+                          src={logo}
+                        />
+                        <h5 className="ComHead">
+                          {proposal.proposer.first_name +
+                            " " +
+                            proposal.proposer.last_name}
+                        </h5>
+                      </Row>
+                      <Row>
+                        <h6 className="EthDesc">
+                          Eth Address: {proposal.proposer.eth_address}
+                        </h6>
+                      </Row>
+                      <div className="PatentComment JustifyContent">
+                        <p>{proposal.description}</p>
+                      </div>
+                      <Button
+                        className="ApproveProposal hvr-icon-bounce"
+                        onClick={() =>
+                          this.approveProposer(
+                            proposal.id,
+                            this.state.job.budget
+                          )
+                        }
+                      >
+                        <FontAwesomeIcon
+                          icon={faThumbsUp}
+                          style={{ marginRight: 7 }}
+                          className="hvr-icon"
+                        />{" "}
+                        Approve Proposal
+                      </Button>
+                    </div>
+                  ))
+                : null}
+            </div>
+          )}
+        </Row>
         <Modal size="lg" open={this.state.open} toggle={this.toggle}>
           {this.state.proposalSubmit ? (
             <div>
