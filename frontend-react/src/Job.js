@@ -2,24 +2,16 @@ import React from "react";
 import {
   Row,
   Col,
-  Container,
   Button,
   FormInput,
-  Collapse,
-  Card,
-  CardFooter,
   CardBody,
-  CardTitle,
   CardHeader,
-  CardImg,
-  ListGroup,
-  ListGroupItem,
   Modal,
-  ModalBody,
   ModalHeader,
   Form,
   FormGroup,
   FormTextarea,
+  Badge
 } from "shards-react";
 import "./Proposal.css";
 import Patent from "./PatentImage.png";
@@ -323,9 +315,9 @@ export default class Job extends React.Component {
             </div>
           </Col>
           <Col>
-            <div className="SubPat">
+            <div>
               {this.state.job.approved ? (
-                <div>
+                <div className="SubPat">
                   {
                     <div>
                       <h4 style={{ marginBottom: 25, paddingTop: 20 }}>
@@ -388,7 +380,7 @@ export default class Job extends React.Component {
                   }
                 </div>
               ) : (
-                <div>
+                <div className="SubPat">
                   <CardHeader></CardHeader>
 
                   <CardBody>
@@ -397,9 +389,12 @@ export default class Job extends React.Component {
                       <h5 className="SideCard1">Budget </h5>{" "}
                       {this.state.job.budget}
                     </Row>
-                    <Row>
-                      <h5 className="SideCard">Skills Required </h5>{" "}
-                      {this.state.job.skills_required.join(",")}
+                    <Row className="JobSkills">
+                      {this.state.job.skills_required.map((skill) => (
+                        <Badge className="Skills" outline theme="info">
+                          {skill}
+                        </Badge>
+                      ))}
                     </Row>
                     <Button onClick={this.toggle} style={{ marginTop: 20 }}>
                       Apply
@@ -493,7 +488,7 @@ export default class Job extends React.Component {
                     />
                   </div>
                 </FormGroup>
-                <Button pill theme="warning" onClick={this.submitProposal}>
+                <Button pill theme="success" onClick={this.submitProposal}>
                   Submit Proposal
                 </Button>
               </Form>

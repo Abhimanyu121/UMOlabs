@@ -25,6 +25,7 @@ import "./Categories.css";
 import { shortDescription } from "./utils";
 import "./Hover.css";
 import { useHistory } from "react-router-dom";
+import { getProfile, createProposal } from "./services";
 
 export default class Categories extends React.Component {
   constructor(props) {
@@ -46,9 +47,17 @@ export default class Categories extends React.Component {
   async componentDidMount() {
     fetch("http://127.0.0.1:8000/api/jobs")
       .then((resp) => resp.json())
-      .then((json) => {
+      .then(async (json) => {
         console.log(json);
-        this.setState({ jobs: json });
+
+        for (var i = 0; i < json.length; i++) {
+          console.log("This is i", i);
+          const resp = await getProfile(json[i].employer);
+          console.log("This isasdasd i", i);
+          json[i].employer = resp;
+          console.log("json", json);
+          this.setState({ jobs: json });
+        }
       });
   }
 
@@ -83,6 +92,9 @@ export default class Categories extends React.Component {
               className="hvr-icon-pop Btn-2"
               outline
               theme="light"
+              onClick={() => {
+                this.props.history.push(`/new-job`);
+              }}
             >
               Create Job
               <FontAwesomeIcon
@@ -177,127 +189,28 @@ export default class Categories extends React.Component {
                           </p>
                           <p className="JobPara">
                             {job.skills_required.map((skill) => (
-                              <Badge
-                                className="Skills"
-                                outline
-                                theme="secondary"
-                              >
+                              <Badge className="Skills" outline theme="info">
                                 {skill}
                               </Badge>
                             ))}
                           </p>
                         </div>
                         <div class="JobsPreview">
-                          <h4 className="JobHeading1">$25-$30/Hour</h4>
+                          <h4 className="JobHeading1">${job.budget}/Hour</h4>
                           <img
                             width="20%"
                             height="20%"
                             className="SellerNameIcon"
                             src={logo}
                           />
-                          <h6 className="SellName">Alison Grey</h6>
+                          <h6 className="SellName">
+                            {job.employer.first_name +
+                              " " +
+                              job.employer.last_name}
+                          </h6>
                         </div>
                       </div>
                     </div>
-
-                    // <Card
-                    //   key={key}
-                    //   className="Jobs hvr-underline-reveal"
-                    //   onClick={() => {
-                    //     this.props.history.push(`/job/${job.id}`);
-                    //   }}
-                    // >
-                    //   <CardBody>
-                    //     <Row>
-                    //       <Col>
-                    //         <h4 className="JobHeading">
-                    //           <FontAwesomeIcon
-                    //             icon={faLaptop}
-                    //             style={{ marginRight: 7 }}
-                    //           />
-                    //           {job.title}
-                    //         </h4>
-                    //       </Col>
-
-                    //       <Col>
-                    //         <h4 className="JobHeading1">$25-$30/Hour</h4>
-                    //       </Col>
-                    //     </Row>
-                    //     <Row>
-                    //       <p className="JobPara">
-                    //         {shortDescription(job.description)}
-                    //       </p>
-                    //     </Row>
-                    //     <Row>
-                    //       <p className="JobPara">
-                    //        {job.skills_required.map((skill) =>
-                    //       <Badge outline pill theme="secondary">
-                    //         {skill}
-                    //       </Badge>)}
-                    //       </p>
-                    //     </Row>
-                    //     <Row>
-                    //       <img
-                    //         width="3%"
-                    //         height="2%"
-                    //         className="SellerNameIcon"
-                    //         src={logo}
-                    //       />
-                    //       <h6 className="SellName">Alison Grey</h6>
-                    //     </Row>
-                    //   </CardBody>
-                    // </Card>
-                    // <div
-                    //   key={key}
-                    //   className="Jobs hvr-underline-reveal"
-                    //   onClick={() => {
-                    //     this.props.history.push(`/job/${job.id}`);
-                    //   }}
-                    // >
-                    //   <Row>
-                    //     <Col>
-                    //       <h4 className="JobHeading">
-                    //         <FontAwesomeIcon
-                    //           icon={faLaptop}
-                    //           style={{ marginRight: 7 }}
-                    //         />
-                    //         {job.title}
-                    //       </h4>
-                    //     </Col>
-
-                    //     <Col>
-                    //       <h4 className="JobHeading1">$25-$30/Hour</h4>
-                    //     </Col>
-                    //   </Row>
-                    //   <Row>
-                    //     <p className="JobPara">
-                    //       {shortDescription(job.description)}
-                    //     </p>
-                    //   </Row>
-                    //   <Row>
-                    //     <p className="JobPara">
-                    //       <b>Skills Required: </b>
-                    //       {job.skills_required.join(", ")}
-                    //     </p>
-                    //   </Row>
-                    //   <Row>
-                    //     <img
-                    //       width="3%"
-                    //       height="2%"
-                    //       className="SellerNameIcon"
-                    //       src={logo}
-                    //     />
-                    //     <h6 className="SellName">Alison Grey</h6>
-                    //   </Row>
-
-                    //   {/* <Link
-                    //     style={{ color: "white" }}
-                    //     className="Link"
-                    //     to={`/job/${job.id}`}
-                    //   >
-                    //     Read more &rarr;
-                    //   </Link> */}
-                    // </div>
                   ))
                 : null}
             </div>
@@ -307,35 +220,6 @@ export default class Categories extends React.Component {
           <Col></Col>
         </Row>
       </div>
-      // {/* {this.state.jobs.length
-      //     ? this.state.jobs.map((job, key) => (
-      //         <div key={key}>
-      //           <Card
-      //             className="CategoryCard"
-      //             style={{ maxWidth: "300px" }}
-      //           >
-      //             <CardImg src="https://place-hold.it/300x200" />
-      //             <CardBody>
-      //               <CardTitle>{job.title}</CardTitle>
-      //               <p>{shortDescription(job.description)}</p>
-      //               <p>
-      //                 <b>Skills Required: </b>
-      //                 {job.skills_required.join(", ")}
-      //               </p>
-      //             </CardBody>
-      //             <CardFooter>
-      //               <Link
-      //                 style={{ color: "white" }}
-      //                 className="Link"
-      //                 to={`/job/${job.id}`}
-      //               >
-      //                 Read more &rarr;
-      //               </Link>
-      //             </CardFooter>
-      //           </Card>
-      //         </div>
-      //       ))
-      //     : null} */}
     );
   }
 }
