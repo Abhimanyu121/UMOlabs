@@ -31,20 +31,23 @@ export const createAccount = async (first_name, last_name, email, password) => {
 };
 
 export const login = async (email, password) => {
-  const resp = await fetch("http://127.0.0.1:8000/api/login", {
-    method: "POST",
-    body: JSON.stringify({
-      email,
-      password,
-    }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  const json = await resp.json();
-
-  return json;
+  try {
+    const resp = await fetch("http://127.0.0.1:8000/api/login", {
+      method: "POST",
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const json = await resp.json();
+    return json;
+  } catch (error) {
+    console.log('error', error)
+    return error;
+  }
 };
 
 export const createJob = async (

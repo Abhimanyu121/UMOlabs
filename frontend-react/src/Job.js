@@ -11,7 +11,7 @@ import {
   Form,
   FormGroup,
   FormTextarea,
-  Badge
+  Badge, Container
 } from "shards-react";
 import "./Proposal.css";
 import Patent from "./PatentImage.png";
@@ -57,6 +57,9 @@ export default class Job extends React.Component {
   }
 
   async submitProposal() {
+    if (!this.state.profile) {
+      alert("Please Log In");
+    }
     const loggedIn = localStorage.getItem("loggedIn");
     console.log("loggedIn", loggedIn);
     if (loggedIn) {
@@ -67,10 +70,11 @@ export default class Job extends React.Component {
       return;
     }
     try {
+      console.log("this is state", this.state);
       const resp = await createProposal(
         this.state.title,
         this.state.description,
-        this.state.profile.id,
+        this.state.profile.profile.id,
         this.state.job.id
       );
       if (resp) {
@@ -82,6 +86,15 @@ export default class Job extends React.Component {
   }
 
   async componentDidMount() {
+    const loggedIn = localStorage.getItem("loggedIn");
+    if (loggedIn === "true") {
+      const profile = localStorage.getItem("profile");
+      console.log("profile", profile);
+      const jsonProfile = JSON.parse(profile);
+      console.log(jsonProfile);
+      this.setState({ profile: jsonProfile });
+      console.log(this.state);
+    }
     // Fetch Job
     console.log(this.props.match.params.jobid);
     var url1 =
@@ -403,9 +416,12 @@ export default class Job extends React.Component {
                 </div>
               )}
             </div>
+            
           </Col>
         </Row>
-        <Row>
+        <hr/>
+        <center>
+          <div>
           {this.state.job.approved ? null : (
             <div>
               <h5 className="Heading1">Proposals</h5>
@@ -454,7 +470,9 @@ export default class Job extends React.Component {
                 : null}
             </div>
           )}
-        </Row>
+        </div>
+
+        </center>
         <Modal size="lg" open={this.state.open} toggle={this.toggle}>
           {this.state.proposalSubmit ? (
             <div>

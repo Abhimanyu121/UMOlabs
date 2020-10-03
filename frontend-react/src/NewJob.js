@@ -75,17 +75,20 @@ export default class NewJob extends React.Component {
 
   async createNewJob() {
     try {
+      console.log('state', this.state)
       const resp = await createJob(
         this.state.title,
         this.state.description,
         this.state.budget,
         this.state.skills_required,
-        this.state.employer.id
+        this.state.profile.profile.id
       );
       if (resp) {
+        alert('Created a New Job')
         console.log("resp", resp);
       }
     } catch (error) {
+      alert('Cannot create a New Job')
       console.log(error, "error");
     }
   }

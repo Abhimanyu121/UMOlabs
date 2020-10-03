@@ -72,19 +72,20 @@ export default class NavExample extends React.Component {
   }
 
   loginUser() {
-    try {
-      login(this.state.email, this.state.password).then((resp) => {
-        console.log(resp);
-        this.toggle();
-
+    login(this.state.email, this.state.password).then((resp) => {
+      console.log(resp);
+      this.toggle();
+      if(JSON.parse(resp).profile != undefined) {
         localStorage.setItem("loggedIn", true);
         localStorage.setItem("profile", resp);
-
         this.setState({ loggedIn: true });
-      });
-    } catch (error) {
-      console.log("eroor", error);
-    }
+      }
+      else {
+        alert('Incorrect Details')
+      }
+    }).catch((error) => {
+      alert('Incorrect Details')
+    })
   }
 
   logoutUser() {
@@ -275,7 +276,7 @@ export default class NavExample extends React.Component {
                   />
                 </Button>
               )}
-              <Modal open={open} toggle={this.toggle}>
+              <Modal size="lg" backdrop="false" open={open} toggle={this.toggle}>
                 <ModalHeader>Login</ModalHeader>
                 <ModalBody>
                   <Form>
